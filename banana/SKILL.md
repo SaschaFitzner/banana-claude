@@ -97,24 +97,44 @@ Choose the expertise lens that best fits the request:
 
 ### Step 3: Construct the Reasoning Brief
 
-Build the prompt using all 6 components. Describe the scene — do NOT list
-keywords. Write in natural narrative paragraphs.
+Build the prompt using the proven weight distribution. Be SPECIFIC and VISCERAL —
+never abstract or conceptual. Describe what the camera sees, not what the ad means.
 
-**The 6-Component Formula:**
+**Weight Distribution (from 2,500+ tested prompts):**
 
-1. **Subject** — Who/what, with rich physical detail (textures, materials, scale)
-2. **Action** — What is happening, pose, gesture, movement, state
-3. **Context** — Environment, setting, time of day, season, weather
-4. **Composition** — Camera angle, shot type, framing, negative space, depth
-5. **Lighting** — Light source, quality, direction, color temperature, shadows
-6. **Style** — Art medium, aesthetic, film stock, reference artists/eras
+| Component | Weight | Include |
+|-----------|--------|---------|
+| **Subject** | 40% | Age, skin tone, hair, eyes, expression, physical micro-details |
+| **Styling** | 25% | Brand names, textures (crinkle, metallic, silk), fit, accessories |
+| **Environment** | 15% | Specific location + time + weather + contextual objects |
+| **Camera** | 10% | Real camera model + exact lens + f-stop + shot type |
+| **Lighting** | 10% | Direction, quality, color temp, named setup (Rembrandt, rim) |
 
-**Template for photorealistic:**
+**CRITICAL RULES:**
+- Name real cameras: "Sony A7R IV", "Canon EOS R5", "iPhone 16 Pro Max"
+- Name real brands for styling: "Lululemon", "Tom Ford" (triggers visual associations)
+- Include micro-details: "sweat droplets on collarbones", "baby hairs stuck to neck"
+- Use action verbs: "mid-run", "posing confidently", "captured mid-stride"
+- End with: "ultra-realistic", "high resolution" (these DO help on Gemini)
+- For products: say "prominently displayed" to ensure visibility
+- **NEVER** write "a dark-themed ad showing..." — describe the SCENE, not the concept
+
+**Template for photorealistic / ads:**
 ```
-A photorealistic [shot type] of [subject with physical detail], [action/pose],
-set in [environment with specifics]. [Lighting conditions] create [mood].
-Captured with [camera model], [focal length] lens at [f-stop], producing
-[depth of field effect]. [Color palette/grading notes]. [Film stock reference].
+[Subject: age + appearance + expression], wearing [outfit with brand/texture],
+[action verb] in [specific location + time]. [Micro-detail about skin/hair/
+sweat/texture]. Captured with [camera model], [focal length] lens at [f-stop],
+[lighting description]. [Platform context: "Instagram aesthetic" / "commercial
+photography for advertising"]. Ultra-realistic, high resolution.
+```
+
+**Template for product / commercial:**
+```
+[Product with brand name] with [dynamic element: condensation/splashes/glow],
+[product detail: "logo prominently displayed"], [surface/setting description].
+[Supporting visual elements: light rays, particles, reflections].
+Commercial photography for an advertising campaign, high resolution,
+high level of detail, vibrant complementary colors.
 ```
 
 **Template for illustrated/stylized:**
@@ -130,6 +150,9 @@ A [asset type] with the text "[exact text]" in [descriptive font style],
 [placement and sizing]. [Layout structure]. [Color scheme]. [Visual
 context and supporting elements].
 ```
+
+For more templates including SaaS marketing, fashion editorial, and logo/branding,
+see `references/prompt-engineering.md` → Proven Prompt Templates section.
 
 ### Step 4: Select Aspect Ratio
 
@@ -290,7 +313,7 @@ Default: `gemini-3.1-flash-image-preview`. Switch with `set_model` when routing 
 | Safety filter false positive | Filters are overly cautious. Rephrase using abstraction, artistic framing, or metaphor. Common: "dog" blocked → try "a friendly golden retriever in a sunny park". See `references/prompt-engineering.md` Safety Rephrase Strategies. |
 | MCP unavailable | Fall back to direct API: `python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py --prompt "..." --aspect-ratio "16:9"` or `scripts/edit.py --image PATH --prompt "..."`. These call the Gemini REST API directly with no MCP dependency. |
 | Vague request | Ask clarifying questions before generating |
-| Poor result quality | Review Reasoning Brief — likely missing components |
+| Poor result quality | Review Reasoning Brief — likely too abstract. Load `references/prompt-engineering.md` Proven Templates and rebuild with specifics. |
 
 ## Cost Tracking
 
