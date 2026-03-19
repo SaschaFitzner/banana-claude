@@ -95,7 +95,7 @@ Claude will ask about your brand, select the right domain mode (Cinema, Product,
 
 | Command | Description |
 |---------|-------------|
-| `/banana` | Interactive — Claude detects intent and guides you |
+| `/banana` | Interactive -- Claude detects intent and guides you |
 | `/banana generate <idea>` | Full Creative Director pipeline |
 | `/banana edit <path> <instructions>` | Intelligent image editing |
 | `/banana chat` | Multi-turn visual session (maintains consistency) |
@@ -111,15 +111,15 @@ Claude will ask about your brand, select the right domain mode (Cinema, Product,
 
 ## What Makes This Different
 
-- **Intent Analysis** — Understands *what you actually need* (blog header? app icon? product shot?)
-- **Domain Expertise** — Selects the right creative lens (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract)
-- **5-Component Prompt Formula** — Constructs prompts with Subject + Action + Location/Context + Composition + Style (includes lighting)
-- **Prompt Adaptation** — Translates patterns from a 2,500+ curated prompt database to Gemini's natural language format
-- **Post-Processing** — Crops, removes backgrounds, converts formats, resizes for platforms
-- **Batch Variations** — Generates N variations rotating different components
-- **Session Consistency** — Maintains character/style across multi-turn conversations
-- **4K Resolution Output** — Up to 4096×4096 with `imageSize` control
-- **14 Aspect Ratios** — Including ultra-wide 21:9 for cinematic compositions
+- **Intent Analysis** -- Understands *what you actually need* (blog header? app icon? product shot?)
+- **Domain Expertise** -- Selects the right creative lens (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract)
+- **5-Component Prompt Formula** -- Constructs prompts with Subject + Action + Location/Context + Composition + Style (includes lighting)
+- **Prompt Adaptation** -- Translates patterns from a 2,500+ curated prompt database to Gemini's natural language format
+- **Post-Processing** -- Crops, removes backgrounds, converts formats, resizes for platforms
+- **Batch Variations** -- Generates N variations rotating different components
+- **Session Consistency** -- Maintains character/style across multi-turn conversations
+- **4K Resolution Output** -- Up to 4096×4096 with `imageSize` control
+- **14 Aspect Ratios** -- Including ultra-wide 21:9 for cinematic compositions
 
 ## The 5-Component Prompt Formula
 
@@ -177,8 +177,8 @@ Instead of sending "a cat in space" to Gemini, Claude constructs:
 └── scripts/
     ├── setup_mcp.py                   # Configure MCP in Claude Code
     ├── validate_setup.py             # Verify installation
-    ├── generate.py                   # Direct API fallback — generation
-    ├── edit.py                       # Direct API fallback — editing
+    ├── generate.py                   # Direct API fallback -- generation
+    ├── edit.py                       # Direct API fallback -- editing
     ├── cost_tracker.py               # Cost logging and summaries
     ├── presets.py                    # Brand/style preset management
     └── batch.py                     # CSV batch workflow parser
@@ -204,7 +204,7 @@ Contributions welcome! Please open an issue or submit a pull request.
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License -- see [LICENSE](LICENSE) for details.
 
 ---
 

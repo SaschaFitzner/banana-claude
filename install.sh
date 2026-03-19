@@ -1,5 +1,5 @@
 #!/bin/bash
-# Claude Banana — Install Script
+# Claude Banana -- Install Script
 # Installs the skill to ~/.claude/skills/ for Claude Code
 #
 # Usage:

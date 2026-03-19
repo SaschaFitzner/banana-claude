@@ -1,4 +1,4 @@
-# MCP Tools Reference — @ycse/nanobanana-mcp
+# MCP Tools Reference -- @ycse/nanobanana-mcp
 
 > Package: `@ycse/nanobanana-mcp`
 > GitHub: https://github.com/YCSE/nanobanana-mcp
@@ -49,7 +49,7 @@ Multi-turn visual conversation maintaining session context.
 
 **Returns:** Text response + optional image
 
-**Key feature:** Session consistency — maintains style, characters, and context across turns. Great for iterative refinement.
+**Key feature:** Session consistency -- maintains style, characters, and context across turns. Great for iterative refinement.
 
 ### set_aspect_ratio
 Configure the aspect ratio for subsequent image generations.
@@ -70,8 +70,8 @@ Switch the active Gemini model.
 | `model` | string | Yes | Model identifier |
 
 **Available models:**
-- `gemini-3.1-flash-image-preview` (default, recommended — Nano Banana 2)
-- `gemini-2.5-flash-image` (stable fallback — Nano Banana original)
+- `gemini-3.1-flash-image-preview` (default, recommended -- Nano Banana 2)
+- `gemini-2.5-flash-image` (stable fallback -- Nano Banana original)
 <!-- REMOVED 2026-03-19: gemini-3-pro-image-preview shut down by Google March 9, 2026. Do not use. -->
 
 ### get_image_history
@@ -126,13 +126,13 @@ If a feature is not yet supported by the MCP package, you can still use it via d
 ## ❌ Parameters That Do NOT Exist for Gemini Image Models
 
 These are common copy-paste errors from Imagen or other model documentation.
-Passing them will not cause errors — they will be silently ignored.
+Passing them will not cause errors -- they will be silently ignored.
 
-- `numberOfImages` / `n` / `sampleCount` — Gemini generates ONE image per call. These are Imagen-only. There is no batch parameter.
-- `negativePrompt` — See prompt-engineering.md for the correct approach (semantic reframing).
-- `output_mime_type` — Vertex AI only, not available in Gemini API.
-- `candidate_count` — Only 1 supported for image models.
-- `seed` — Not supported for reproducible generation.
+- `numberOfImages` / `n` / `sampleCount` -- Gemini generates ONE image per call. These are Imagen-only. There is no batch parameter.
+- `negativePrompt` -- See prompt-engineering.md for the correct approach (semantic reframing).
+- `output_mime_type` -- Vertex AI only, not available in Gemini API.
+- `candidate_count` -- Only 1 supported for image models.
+- `seed` -- Not supported for reproducible generation.
 
 ## Error Response Taxonomy
 

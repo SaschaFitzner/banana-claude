@@ -8,10 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.0] - 2026-03-19
 
 ### Breaking Changes
-- Removed `gemini-3-pro-image-preview` (Nano Banana Pro) — shut down by Google March 9, 2026
+- Removed `gemini-3-pro-image-preview` (Nano Banana Pro) -- shut down by Google March 9, 2026
 - Replaced 6-component Reasoning Brief with Google's official 5-component formula (Subject → Action → Location/Context → Composition → Style)
 - Default resolution changed from `1K` to `2K` in fallback scripts
-- Banned prompt keywords: "8K", "masterpiece", "ultra-realistic", "high resolution" — use prestigious context anchors instead
+- Banned prompt keywords: "8K", "masterpiece", "ultra-realistic", "high resolution" -- use prestigious context anchors instead
 
 ### Added
 - Banned Keywords section in prompt-engineering.md (Stable Diffusion-era terms that degrade quality)
@@ -45,13 +45,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2026-03-14
 
 ### Added
-- **Multi-model routing** — task-based model selection table (draft/standard/quality/text-heavy/batch)
-- **Cost tracking** — `cost_tracker.py` with log, summary, today, estimate, and reset commands
-- **Direct API fallback** — `generate.py` and `edit.py` scripts for when MCP is unavailable (stdlib only)
-- **Brand/style presets** — `presets.py` for reusable brand identities (colors, style, typography, lighting, mood)
-- **CSV batch workflow** — `batch.py` parses CSV files into generation plans with cost estimates
-- **Green screen transparency pipeline** — workaround for Gemini's lack of transparent backgrounds
-- **Safety filter rephrase strategies** — 5 rephrase patterns, common trigger categories, example rephrases
+- **Multi-model routing** -- task-based model selection table (draft/standard/quality/text-heavy/batch)
+- **Cost tracking** -- `cost_tracker.py` with log, summary, today, estimate, and reset commands
+- **Direct API fallback** -- `generate.py` and `edit.py` scripts for when MCP is unavailable (stdlib only)
+- **Brand/style presets** -- `presets.py` for reusable brand identities (colors, style, typography, lighting, mood)
+- **CSV batch workflow** -- `batch.py` parses CSV files into generation plans with cost estimates
+- **Green screen transparency pipeline** -- workaround for Gemini's lack of transparent backgrounds
+- **Safety filter rephrase strategies** -- 5 rephrase patterns, common trigger categories, example rephrases
 - Cost tracking reference (`references/cost-tracking.md`) with pricing table and free tier limits
 - Brand presets reference (`references/presets.md`) with schema, 3 example presets, merge behavior
 - Abstract domain mode added to README

@@ -5,27 +5,27 @@
 
 ## Available Models
 
-### gemini-3.1-flash-image-preview — Nano Banana 2 (DEFAULT)
+### gemini-3.1-flash-image-preview -- Nano Banana 2 (DEFAULT)
 | Property | Value |
 |----------|-------|
 | **Model ID** | `gemini-3.1-flash-image-preview` |
 | **Tier** | Nano Banana 2 (Flash) |
-| **Status** | Preview — **Active, recommended default** |
-| **Speed** | Fast — optimized for high-volume use |
+| **Status** | Preview -- **Active, recommended default** |
+| **Speed** | Fast -- optimized for high-volume use |
 | **Aspect Ratios** | All 14 ratios including extreme: 1:4, 4:1, 1:8, 8:1 (see table below) |
 | **Max Resolution** | Up to 4096×4096 (4K tier) |
 | **Input Tokens** | 131,072 |
 | **Features** | Google Search grounding (web + image), thinking levels, image-only output, extreme aspect ratios |
 | **Rate Limits (Free)** | ~5-15 RPM / ~20-500 RPD (per project, resets midnight Pacific. Cut ~92% Dec 2025) |
 | **Output Tokens** | ~1,290 output tokens per image |
-| **Best For** | All standard production generation and editing — most use cases |
+| **Best For** | All standard production generation and editing -- most use cases |
 
-### gemini-2.5-flash-image — Nano Banana (Original)
+### gemini-2.5-flash-image -- Nano Banana (Original)
 | Property | Value |
 |----------|-------|
 | **Model ID** | `gemini-2.5-flash-image` |
 | **Tier** | Nano Banana (Flash, original generation) |
-| **Status** | GA — **Active** |
+| **Status** | GA -- **Active** |
 | **Speed** | Fast |
 | **Aspect Ratios** | 1:1, 16:9, 9:16, 4:3, 3:4, 2:3, 3:2, 4:5, 5:4, 21:9 (10 ratios) |
 | **Max Resolution** | Up to 1024×1024 (1K tier) |
@@ -34,7 +34,7 @@
 | **Best For** | Free-tier users, budget-conscious high-volume workflows, 1K-resolution use cases |
 | **Cost** | ~$0.039/image at 1K |
 
-## ⛔ DEPRECATED — Nano Banana Pro (gemini-3-pro-image-preview)
+## ⛔ DEPRECATED -- Nano Banana Pro (gemini-3-pro-image-preview)
 
 <!-- REMOVED 2026-03-19: gemini-3-pro-image-preview shut down by Google March 9, 2026 -->
 
@@ -42,7 +42,7 @@
 with a hard error. Do not use. The replacement is Nano Banana 2
 (`gemini-3.1-flash-image-preview`).
 
-**Was:** Nano Banana Pro tier — professional asset production, 4K output, 14 reference images, 94% text accuracy.
+**Was:** Nano Banana Pro tier -- professional asset production, 4K output, 14 reference images, 94% text accuracy.
 
 **Migration:** Replace all references to `gemini-3-pro-image-preview` with `gemini-3.1-flash-image-preview`.
 
@@ -95,7 +95,7 @@ All 14 supported ratios. Availability varies by model:
 
 ## Resolution Tiers
 
-Control output resolution with the `imageSize` parameter. Note the **UPPERCASE** requirement — lowercase values are silently rejected.
+Control output resolution with the `imageSize` parameter. Note the **UPPERCASE** requirement -- lowercase values are silently rejected.
 
 | `imageSize` Value | Pixel Range | Model Availability | Use Case |
 |-------------------|-------------|-------------------|----------|
@@ -107,8 +107,8 @@ Control output resolution with the `imageSize` parameter. Note the **UPPERCASE**
 **Notes:**
 - Actual pixel dimensions depend on aspect ratio (e.g., 4K at 16:9 = 4096×2304)
 - Higher resolutions consume more tokens and cost more
-- The API default is `1K` if `imageSize` is omitted. The banana skill defaults to `2K` — always pass `imageSize` explicitly
-- `imageSize` value MUST be uppercase — `"2k"` will be silently ignored
+- The API default is `1K` if `imageSize` is omitted. The banana skill defaults to `2K` -- always pass `imageSize` explicitly
+- `imageSize` value MUST be uppercase -- `"2k"` will be silently ignored
 
 ## API Configuration
 
@@ -167,8 +167,8 @@ Example: "Search for the latest SpaceX Starship design, analyze its proportions 
 
 ### Multi-Image Input
 Up to 14 reference images can be provided:
-- **10 object references** — for style, composition, or visual matching
-- **4 character references** — assign distinct names to preserve features across generations
+- **10 object references** -- for style, composition, or visual matching
+- **4 character references** -- assign distinct names to preserve features across generations
 
 Useful for character consistency, style transfer, and brand-aligned generation.
 
@@ -200,25 +200,25 @@ Pricing is approximate and based on ~1,290 output tokens per image.
 | **Format** | PNG |
 | **Max Resolution** | Up to 4096×4096 (4K tier, Nano Banana 2) |
 | **Color Space** | sRGB |
-| **Text Rendering** | Supported — excellent under 25 characters |
+| **Text Rendering** | Supported -- excellent under 25 characters |
 | **Style Control** | Via prompt engineering |
 
 ## Safety Filters
 
 Gemini uses a two-layer safety architecture:
 
-1. **Input filters** — block prompts containing prohibited content before generation
-2. **Output filters** — analyze generated images and block unsafe results
+1. **Input filters** -- block prompts containing prohibited content before generation
+2. **Output filters** -- analyze generated images and block unsafe results
 
 | `finishReason` | Meaning | Retryable? |
 |----------------|---------|:----------:|
 | `STOP` | Successful generation | N/A |
 | `IMAGE_SAFETY` | Output blocked by safety filter | Rephrase prompt |
-| `PROHIBITED_CONTENT` | Content policy violation | No — topic is blocked |
+| `PROHIBITED_CONTENT` | Content policy violation | No -- topic is blocked |
 | `SAFETY` | General safety block | Rephrase prompt |
 | `RECITATION` | Detected copyrighted content | Rephrase prompt |
 
-**Known issue:** Filters are known to be overly cautious — benign prompts may be blocked. Iterate with rephrased wording if this happens.
+**Known issue:** Filters are known to be overly cautious -- benign prompts may be blocked. Iterate with rephrased wording if this happens.
 
 ## Content Credentials
 
@@ -227,10 +227,10 @@ Gemini uses a two-layer safety architecture:
 
 ## Key Limitations
 - No video generation (image only)
-- No transparent backgrounds (PNG but always with background — use green screen workaround)
-- Text rendering quality varies — keep text under 25 characters for best results
-- Safety filters may block some prompts (violence, NSFW, public figures) — known to be overly cautious
+- No transparent backgrounds (PNG but always with background -- use green screen workaround)
+- Text rendering quality varies -- keep text under 25 characters for best results
+- Safety filters may block some prompts (violence, NSFW, public figures) -- known to be overly cautious
 - Session context resets between Claude Code conversations
-- `imageSize` values MUST be uppercase — lowercase fails silently
-- Gemini generates ONE image per API call — no batch parameter exists
-- No negative prompt parameter — use semantic reframing instead
+- `imageSize` values MUST be uppercase -- lowercase fails silently
+- Gemini generates ONE image per API call -- no batch parameter exists
+- No negative prompt parameter -- use semantic reframing instead

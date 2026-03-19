@@ -8,13 +8,13 @@ metadata:
   mcp-package: "@ycse/nanobanana-mcp"
 ---
 
-# Claude Banana — Creative Director for AI Image Generation
+# Claude Banana -- Creative Director for AI Image Generation
 
-## MANDATORY — Read these before every generation
+## MANDATORY -- Read these before every generation
 
 Before constructing ANY prompt or calling ANY tool, you MUST read:
-1. `references/gemini-models.md` — to select the correct model and parameters
-2. `references/prompt-engineering.md` — to construct a compliant prompt
+1. `references/gemini-models.md` -- to select the correct model and parameters
+2. `references/prompt-engineering.md` -- to construct a compliant prompt
 
 This is not optional. Do not skip this even for simple requests.
 
@@ -28,7 +28,7 @@ construct an optimized prompt using the 5-Component Formula from `references/pro
 
 | Command | What it does |
 |---------|-------------|
-| `/banana` | Interactive — detect intent, craft prompt, generate |
+| `/banana` | Interactive -- detect intent, craft prompt, generate |
 | `/banana generate <idea>` | Generate image with full prompt engineering |
 | `/banana edit <path> <instructions>` | Edit existing image intelligently |
 | `/banana chat` | Multi-turn visual session (character/style consistent) |
@@ -42,11 +42,11 @@ construct an optimized prompt using the 5-Component Formula from `references/pro
 
 **NEVER** pass the user's raw text as-is to `gemini_generate_image`.
 
-Follow this pipeline for every generation — no exceptions:
+Follow this pipeline for every generation -- no exceptions:
 
 1. Read `references/gemini-models.md` and `references/prompt-engineering.md`
-2. Analyze intent (Step 1 below) — confirm with user if ambiguous
-3. Select domain mode (Step 2) — check for presets (Step 1.5)
+2. Analyze intent (Step 1 below) -- confirm with user if ambiguous
+3. Select domain mode (Step 2) -- check for presets (Step 1.5)
 4. Construct prompt using 5-component formula from prompt-engineering.md
 5. Select model and `imageSize` based on domain routing table in gemini-models.md
 6. Call the MCP generate tool (or fallback to direct API scripts)
@@ -97,7 +97,7 @@ Choose the expertise lens that best fits the request:
 ### Step 3: Construct the Reasoning Brief
 
 Build the prompt using the **5-Component Formula** from `references/prompt-engineering.md`.
-Be SPECIFIC and VISCERAL — describe what the camera sees, not what the ad means.
+Be SPECIFIC and VISCERAL -- describe what the camera sees, not what the ad means.
 
 **The 5 Components:** Subject → Action → Location/Context → Composition → Style (includes lighting)
 
@@ -106,8 +106,8 @@ Be SPECIFIC and VISCERAL — describe what the camera sees, not what the ad mean
 - Name real brands for styling: "Lululemon", "Tom Ford" (triggers visual associations)
 - Include micro-details: "sweat droplets on collarbones", "baby hairs stuck to neck"
 - Use prestigious context anchors: "Vanity Fair editorial," "National Geographic cover"
-- **NEVER** use banned keywords: "8K", "masterpiece", "ultra-realistic", "high resolution" — use `imageSize` param instead
-- **NEVER** write "a dark-themed ad showing..." — describe the SCENE, not the concept
+- **NEVER** use banned keywords: "8K", "masterpiece", "ultra-realistic", "high resolution" -- use `imageSize` param instead
+- **NEVER** write "a dark-themed ad showing..." -- describe the SCENE, not the concept
 - For critical constraints use ALL CAPS: "MUST contain exactly three figures"
 - For products: say "prominently displayed" to ensure visibility
 
@@ -147,7 +147,7 @@ For more templates see `references/prompt-engineering.md` → Proven Prompt Temp
 
 ### Step 4: Select Aspect Ratio
 
-Match ratio to use case — call `set_aspect_ratio` BEFORE generating:
+Match ratio to use case -- call `set_aspect_ratio` BEFORE generating:
 
 | Use Case | Ratio | Why |
 |----------|-------|-----|
@@ -171,7 +171,7 @@ Choose output resolution based on intended use:
 |-------------|-------------|
 | `512` | Quick drafts, rapid iteration |
 | `1K` | Budget-conscious, web thumbnails, social media |
-| `2K` | **Default** — quality assets, most use cases |
+| `2K` | **Default** -- quality assets, most use cases |
 | `4K` | Print production, hero images, final deliverables |
 
 Note: Resolution control (`imageSize`) depends on MCP package version support.
@@ -197,7 +197,7 @@ For transparent PNG output, use the green screen pipeline documented in `referen
 
 **Pre-flight:** Before running any post-processing, verify tools are available:
 ```bash
-which magick || which convert || echo "ImageMagick not installed — install with: sudo apt install imagemagick"
+which magick || which convert || echo "ImageMagick not installed -- install with: sudo apt install imagemagick"
 ```
 If `magick` (v7) is not found, fall back to `convert` (v6). If neither exists, inform the user.
 
@@ -254,10 +254,10 @@ to search 2,500+ curated prompts. Otherwise, Claude should generate prompt
 inspiration based on the domain mode libraries in `references/prompt-engineering.md`.
 
 **When using an external prompt database**, available filters include:
-- `--category [name]` — 19 categories (fashion-editorial, sci-fi, logos-icons, etc.)
-- `--model [name]` — Filter by original model (adapt to Gemini)
-- `--type image` — Image prompts only
-- `--random` — Random inspiration
+- `--category [name]` -- 19 categories (fashion-editorial, sci-fi, logos-icons, etc.)
+- `--model [name]` -- Filter by original model (adapt to Gemini)
+- `--type image` -- Image prompts only
+- `--random` -- Random inspiration
 
 **IMPORTANT:** Prompts from the database are optimized for Midjourney/DALL-E/etc.
 When adapting to Gemini, you MUST:
@@ -289,10 +289,10 @@ Select model based on task requirements:
 | Scenario | Model | Resolution | Brief Level | When |
 |----------|-------|-----------|-------------|------|
 | Quick draft | `gemini-2.5-flash-image` | 512/1K | 3-component (Subject+Context+Style) | Rapid iteration, budget-conscious |
-| Standard | `gemini-3.1-flash-image-preview` | 2K | Full 5-component | Default — most use cases |
+| Standard | `gemini-3.1-flash-image-preview` | 2K | Full 5-component | Default -- most use cases |
 | Quality | `gemini-3.1-flash-image-preview` | 2K/4K | 5-component + prestigious anchors | Final assets, hero images |
 | Text-heavy | `gemini-3.1-flash-image-preview` | 2K | 5-component, thinking: high | Logos, infographics, text rendering |
-| Batch/bulk | Any model via Batch API | 1K | 5-component | Non-urgent bulk — 50% cost discount |
+| Batch/bulk | Any model via Batch API | 1K | 5-component | Non-urgent bulk -- 50% cost discount |
 
 Default: `gemini-3.1-flash-image-preview`. Switch with `set_model` when routing to 2.5 Flash.
 
@@ -303,12 +303,12 @@ Default: `gemini-3.1-flash-image-preview`. Switch with `set_model` when routing 
 | MCP not configured | Run `/banana setup` |
 | API key invalid | New key at https://aistudio.google.com/apikey |
 | Rate limited (429) | Wait 60s, retry with exponential backoff. Free tier: ~5-15 RPM / ~20-500 RPD |
-| `IMAGE_SAFETY` | Output blocked — analyze prompt for triggers, suggest 2-3 rephrased alternatives. See `references/prompt-engineering.md` Safety Rephrase section. Do NOT auto-retry without user approval. |
-| `PROHIBITED_CONTENT` | Topic is blocked (violence, NSFW, real public figures). Non-retryable — explain why and suggest alternative concepts. |
+| `IMAGE_SAFETY` | Output blocked -- analyze prompt for triggers, suggest 2-3 rephrased alternatives. See `references/prompt-engineering.md` Safety Rephrase section. Do NOT auto-retry without user approval. |
+| `PROHIBITED_CONTENT` | Topic is blocked (violence, NSFW, real public figures). Non-retryable -- explain why and suggest alternative concepts. |
 | Safety filter false positive | Filters are overly cautious. Rephrase using abstraction, artistic framing, or metaphor. Common: "dog" blocked → try "a friendly golden retriever in a sunny park". See `references/prompt-engineering.md` Safety Rephrase Strategies. |
 | MCP unavailable | Fall back to direct API: `python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py --prompt "..." --aspect-ratio "16:9"` or `python3 ${CLAUDE_SKILL_DIR}/scripts/edit.py --image PATH --prompt "..."`. These call the Gemini REST API directly with no MCP dependency. |
 | Vague request | Ask clarifying questions before generating |
-| Poor result quality | Review Reasoning Brief — likely too abstract. Load `references/prompt-engineering.md` Proven Templates and rebuild with specifics. |
+| Poor result quality | Review Reasoning Brief -- likely too abstract. Load `references/prompt-engineering.md` Proven Templates and rebuild with specifics. |
 
 ## Cost Tracking
 
@@ -321,20 +321,20 @@ Before batch operations, show the estimate. Run `cost_tracker.py summary` if the
 ## Response Format
 
 After generating, always provide:
-1. **The image path** — where it was saved
-2. **The crafted prompt** — show the user what you sent (educational)
-3. **Settings used** — model, aspect ratio
-4. **Suggestions** — 1-2 refinement ideas if relevant
+1. **The image path** -- where it was saved
+2. **The crafted prompt** -- show the user what you sent (educational)
+3. **Settings used** -- model, aspect ratio
+4. **Suggestions** -- 1-2 refinement ideas if relevant
 
 ## Reference Documentation
 
-Load on-demand — do NOT load all at startup:
-- `references/prompt-engineering.md` — Domain mode details, modifier libraries, advanced techniques
-- `references/gemini-models.md` — Model specs, rate limits, capabilities
-- `references/mcp-tools.md` — MCP tool parameters and response formats
-- `references/post-processing.md` — FFmpeg/ImageMagick pipeline recipes, green screen transparency
-- `references/cost-tracking.md` — Pricing table, usage guide, free tier limits
-- `references/presets.md` — Brand preset schema, examples, merge behavior
+Load on-demand -- do NOT load all at startup:
+- `references/prompt-engineering.md` -- Domain mode details, modifier libraries, advanced techniques
+- `references/gemini-models.md` -- Model specs, rate limits, capabilities
+- `references/mcp-tools.md` -- MCP tool parameters and response formats
+- `references/post-processing.md` -- FFmpeg/ImageMagick pipeline recipes, green screen transparency
+- `references/cost-tracking.md` -- Pricing table, usage guide, free tier limits
+- `references/presets.md` -- Brand preset schema, examples, merge behavior
 
 ## Setup
 

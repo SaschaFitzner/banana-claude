@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "Claude Banana"
-abstract: "AI image generation skill for Claude Code — Creative Director powered by Gemini"
+abstract: "AI image generation skill for Claude Code -- Creative Director powered by Gemini"
 authors:
   - family-names: "Daniel"
     given-names: "Agrici"

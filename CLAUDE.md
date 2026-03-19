@@ -1,4 +1,4 @@
-# CLAUDE.md — Development context for claude-banana
+# CLAUDE.md -- Development context for claude-banana
 
 This file is read by Claude Code when working inside this repository.
 
@@ -11,9 +11,9 @@ optimized prompts, and orchestrates Gemini API calls.
 
 ## Model status (as of March 2026)
 
-- `gemini-3.1-flash-image-preview` — **Active default.** Nano Banana 2.
-- `gemini-2.5-flash-image` — **Active.** Nano Banana original. Budget/free tier.
-- `gemini-3-pro-image-preview` — **DEAD.** Shut down March 9, 2026. Do not use.
+- `gemini-3.1-flash-image-preview` -- **Active default.** Nano Banana 2.
+- `gemini-2.5-flash-image` -- **Active.** Nano Banana original. Budget/free tier.
+- `gemini-3-pro-image-preview` -- **DEAD.** Shut down March 9, 2026. Do not use.
 
 ## How to test changes
 
@@ -41,7 +41,7 @@ optimized prompts, and orchestrates Gemini API calls.
 
 The fallback scripts (`generate.py`, `edit.py`) use Python's `urllib.request`
 to call the Gemini REST API directly. They have ZERO pip dependencies by design.
-Do NOT add `google-genai` or `requests` as dependencies — the stdlib approach
+Do NOT add `google-genai` or `requests` as dependencies -- the stdlib approach
 ensures the skill works on any system with Python 3.6+.
 
 ## Key constraints
@@ -50,4 +50,4 @@ ensures the skill works on any system with Python 3.6+.
 - Gemini generates ONE image per API call. There is no batch parameter.
 - No negative prompt parameter exists. Use semantic reframing in the prompt.
 - `responseModalities` must explicitly include "IMAGE" or the API returns text only.
-- NEVER use banned keywords in prompts: "8K", "masterpiece", "ultra-realistic", "high resolution" — these degrade output quality. Use prestigious context anchors instead (see prompt-engineering.md).
+- NEVER use banned keywords in prompts: "8K", "masterpiece", "ultra-realistic", "high resolution" -- these degrade output quality. Use prestigious context anchors instead (see prompt-engineering.md).
