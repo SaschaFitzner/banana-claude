@@ -1,23 +1,28 @@
 ---
 name: banana
-description: >
-  AI image generation, editing, and visual intelligence powered by Gemini
-  Nano Banana models via MCP. Claude acts as Creative Director — analyzing
-  intent, selecting domain expertise, and constructing optimized 6-component
-  prompts for best results. Triggers on: "generate image", "create image",
-  "edit image", "banana", "image generation", "picture", "illustration",
-  "visual", "modify image", "draw", "make an image", "hero image",
-  "thumbnail", "logo", "icon", "banner", "mockup", "product shot",
-  "transparent PNG", "remove background", "style transfer".
-allowed-tools: Read, Bash, Write, Edit, Glob, Grep
-argument-hint: "[generate|edit|chat|inspire|batch|setup|preset|cost]"
+description: "AI image generation Creative Director powered by Google Gemini Nano Banana models. Use this skill for ANY request involving image creation, editing, visual asset production, or creative direction. Triggers on: generate an image, create a photo, edit this picture, design a logo, make a banner, visual for my anything, and all /banana commands. Handles text-to-image, image editing, multi-turn creative sessions, batch workflows, and brand presets."
+argument-hint: "[generate|edit|chat|inspire|batch] <idea, path, or command>"
+metadata:
+  version: "4.0.0"
+  author: AgriciDaniel
+  mcp-package: "@ycse/nanobanana-mcp"
 ---
 
 # Claude Banana — Creative Director for AI Image Generation
 
+## MANDATORY — Read these before every generation
+
+Before constructing ANY prompt or calling ANY tool, you MUST read:
+1. `references/gemini-models.md` — to select the correct model and parameters
+2. `references/prompt-engineering.md` — to construct a compliant prompt
+
+This is not optional. Do not skip this even for simple requests.
+
+## Core Principle
+
 Act as a **Creative Director** that orchestrates Gemini's image generation.
 Never pass raw user text directly to the API. Always interpret, enhance, and
-construct an optimized prompt using the Reasoning Brief system below.
+construct an optimized prompt using the 5-Component Formula from `references/prompt-engineering.md`.
 
 ## Quick Reference
 
@@ -37,12 +42,21 @@ construct an optimized prompt using the Reasoning Brief system below.
 
 **NEVER** pass the user's raw text as-is to `gemini_generate_image`.
 
-Instead, follow this pipeline for every generation:
+Follow this pipeline for every generation — no exceptions:
 
-```
-User Request → Intent Analysis → Domain Mode Selection → Reasoning Brief
-→ Aspect Ratio Selection → MCP Call → Post-Processing (if needed) → Deliver
-```
+1. Read `references/gemini-models.md` and `references/prompt-engineering.md`
+2. Analyze intent (Step 1 below) — confirm with user if ambiguous
+3. Select domain mode (Step 2) — check for presets (Step 1.5)
+4. Construct prompt using 5-component formula from prompt-engineering.md
+5. Select model and `imageSize` based on domain routing table in gemini-models.md
+6. Call the MCP generate tool (or fallback to direct API scripts)
+7. Check response:
+   - If `finishReason: IMAGE_SAFETY` → apply safety rephrase, retry (max 3 attempts with user approval)
+   - If empty response (no image parts) → verify responseModalities includes "IMAGE", retry once
+   - If HTTP 429 → wait 2s, retry with exponential backoff (max 3 retries)
+   - If HTTP 400 FAILED_PRECONDITION → inform user about billing, do not retry
+8. On success: save image, log cost, return file path and summary
+9. Never report success until a valid image file path is confirmed to exist
 
 ### Step 1: Analyze Intent
 
@@ -82,36 +96,28 @@ Choose the expertise lens that best fits the request:
 
 ### Step 3: Construct the Reasoning Brief
 
-Build the prompt using the proven weight distribution. Be SPECIFIC and VISCERAL —
-never abstract or conceptual. Describe what the camera sees, not what the ad means.
+Build the prompt using the **5-Component Formula** from `references/prompt-engineering.md`.
+Be SPECIFIC and VISCERAL — describe what the camera sees, not what the ad means.
 
-**Weight Distribution (from 2,500+ tested prompts):**
-
-| Component | Weight | Include |
-|-----------|--------|---------|
-| **Subject** | 30% | Age, skin tone, hair, eyes, expression, physical micro-details |
-| **Action** | 10% | Movement, pose, gesture, interaction, state of being |
-| **Context** | 15% | Specific location + time + weather + contextual objects |
-| **Composition** | 10% | Shot type, camera angle, framing, focal length, f-stop |
-| **Lighting** | 10% | Direction, quality, color temp, named setup (Rembrandt, rim) |
-| **Style** | 25% | Brand names, textures, art medium, camera model, color grading |
+**The 5 Components:** Subject → Action → Location/Context → Composition → Style (includes lighting)
 
 **CRITICAL RULES:**
 - Name real cameras: "Sony A7R IV", "Canon EOS R5", "iPhone 16 Pro Max"
 - Name real brands for styling: "Lululemon", "Tom Ford" (triggers visual associations)
 - Include micro-details: "sweat droplets on collarbones", "baby hairs stuck to neck"
-- Use action verbs: "mid-run", "posing confidently", "captured mid-stride"
-- End with: "ultra-realistic", "high resolution" (these DO help on Gemini)
-- For products: say "prominently displayed" to ensure visibility
+- Use prestigious context anchors: "Vanity Fair editorial," "National Geographic cover"
+- **NEVER** use banned keywords: "8K", "masterpiece", "ultra-realistic", "high resolution" — use `imageSize` param instead
 - **NEVER** write "a dark-themed ad showing..." — describe the SCENE, not the concept
+- For critical constraints use ALL CAPS: "MUST contain exactly three figures"
+- For products: say "prominently displayed" to ensure visibility
 
 **Template for photorealistic / ads:**
 ```
 [Subject: age + appearance + expression], wearing [outfit with brand/texture],
 [action verb] in [specific location + time]. [Micro-detail about skin/hair/
 sweat/texture]. Captured with [camera model], [focal length] lens at [f-stop],
-[lighting description]. [Platform context: "Instagram aesthetic" / "commercial
-photography for advertising"]. Ultra-realistic, high resolution.
+[lighting description]. [Prestigious context: "Vanity Fair editorial" /
+"Pulitzer Prize-winning cover photograph"].
 ```
 
 **Template for product / commercial:**
@@ -119,8 +125,8 @@ photography for advertising"]. Ultra-realistic, high resolution.
 [Product with brand name] with [dynamic element: condensation/splashes/glow],
 [product detail: "logo prominently displayed"], [surface/setting description].
 [Supporting visual elements: light rays, particles, reflections].
-Commercial photography for an advertising campaign, high resolution,
-high level of detail, vibrant complementary colors.
+Commercial photography for an advertising campaign. [Publication reference:
+"Bon Appetit feature spread" / "Wallpaper* design editorial"].
 ```
 
 **Template for illustrated/stylized:**
@@ -137,8 +143,7 @@ A [asset type] with the text "[exact text]" in [descriptive font style],
 context and supporting elements].
 ```
 
-For more templates including SaaS marketing, fashion editorial, and logo/branding,
-see `references/prompt-engineering.md` → Proven Prompt Templates section.
+For more templates see `references/prompt-engineering.md` → Proven Prompt Templates.
 
 ### Step 4: Select Aspect Ratio
 
@@ -283,11 +288,11 @@ Select model based on task requirements:
 
 | Scenario | Model | Resolution | Brief Level | When |
 |----------|-------|-----------|-------------|------|
-| Quick draft | `gemini-2.5-flash-image` | 512/1K | 4-component | Rapid iteration, budget-conscious |
-| Standard | `gemini-3.1-flash-image-preview` | 1K/2K | Full 6-component | Default — most use cases |
-| Quality | `gemini-3.1-flash-image-preview` | 2K/4K | 6-component + camera/film stock | Final assets, hero images |
-| Text-heavy | `gemini-3.1-flash-image-preview` | 2K | 6-component, thinking: high | Logos, infographics, text rendering |
-| Batch/bulk | Any model via Batch API | 1K | 6-component | Non-urgent bulk — 50% cost discount |
+| Quick draft | `gemini-2.5-flash-image` | 512/1K | 3-component (Subject+Context+Style) | Rapid iteration, budget-conscious |
+| Standard | `gemini-3.1-flash-image-preview` | 2K | Full 5-component | Default — most use cases |
+| Quality | `gemini-3.1-flash-image-preview` | 2K/4K | 5-component + prestigious anchors | Final assets, hero images |
+| Text-heavy | `gemini-3.1-flash-image-preview` | 2K | 5-component, thinking: high | Logos, infographics, text rendering |
+| Batch/bulk | Any model via Batch API | 1K | 5-component | Non-urgent bulk — 50% cost discount |
 
 Default: `gemini-3.1-flash-image-preview`. Switch with `set_model` when routing to 2.5 Flash.
 

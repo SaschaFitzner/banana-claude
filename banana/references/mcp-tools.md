@@ -70,9 +70,9 @@ Switch the active Gemini model.
 | `model` | string | Yes | Model identifier |
 
 **Available models:**
-- `gemini-3.1-flash-image-preview` (default, recommended)
-- `gemini-2.5-flash-image` (stable fallback)
-- `gemini-3-pro-image-preview` (Nano Banana Pro — highest quality, text rendering)
+- `gemini-3.1-flash-image-preview` (default, recommended — Nano Banana 2)
+- `gemini-2.5-flash-image` (stable fallback — Nano Banana original)
+<!-- REMOVED 2026-03-19: gemini-3-pro-image-preview shut down by Google March 9, 2026. Do not use. -->
 
 ### get_image_history
 Retrieve list of images generated in the current session.
@@ -113,4 +113,33 @@ Some newer Gemini API features depend on the MCP package version of `@ycse/nanob
 | Multi-image input (up to 14 refs) | Available | Via `gemini_chat` with image paths |
 | All 14 aspect ratios | Available | Via `set_aspect_ratio` |
 
-If a feature is not yet supported by the MCP package, you can still use it via direct API calls with `curl` or the Google AI SDK.
+If a feature is not yet supported by the MCP package, you can still use it via direct API calls with the fallback scripts (`scripts/generate.py` and `scripts/edit.py`).
+
+## ImageConfig Parameter Reference
+
+| Parameter | Type | Valid values | Default | Critical notes |
+|---|---|---|---|---|
+| `aspect_ratio` | string | "1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9", "1:4"*, "4:1"*, "1:8"*, "8:1"* | "1:1" | * = Nano Banana 2 only |
+| `image_size` | string | "512"*, "1K", "2K"*, "4K"* | "1K" | MUST be uppercase. "2k" silently fails. * = Nano Banana 2 only |
+| `person_generation` | string | "ALLOW_ALL", "ALLOW_ADULT", "ALLOW_NONE" | Varies | ALLOW_ALL restricted in EU/UK |
+
+## ❌ Parameters That Do NOT Exist for Gemini Image Models
+
+These are common copy-paste errors from Imagen or other model documentation.
+Passing them will not cause errors — they will be silently ignored.
+
+- `numberOfImages` / `n` / `sampleCount` — Gemini generates ONE image per call. These are Imagen-only. There is no batch parameter.
+- `negativePrompt` — See prompt-engineering.md for the correct approach (semantic reframing).
+- `output_mime_type` — Vertex AI only, not available in Gemini API.
+- `candidate_count` — Only 1 supported for image models.
+- `seed` — Not supported for reproducible generation.
+
+## Error Response Taxonomy
+
+| Error type | Cause | Correct response |
+|---|---|---|
+| HTTP 429 | Rate limit | Exponential backoff. Free tier: ~5-15 RPM. |
+| HTTP 400 FAILED_PRECONDITION | Billing not enabled | User must enable billing in Google AI Studio |
+| `finishReason: "IMAGE_SAFETY"` | Content policy block | Apply safety rephrase from prompt-engineering.md, retry once |
+| Empty `parts` in response | Wrong `response_modalities` | Must include "IMAGE" in responseModalities |
+| `thought_signature` missing | Multi-turn editing on Gemini 3 | Preserve this field from previous response for edit continuity |

@@ -14,6 +14,7 @@ import base64
 import json
 import os
 import sys
+import time
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -64,15 +65,32 @@ def edit_image(image_path, prompt, model, api_key):
         method="POST",
     )
 
-    try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
-            result = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode("utf-8") if e.fp else ""
-        print(json.dumps({"error": True, "status": e.code, "message": error_body}))
-        sys.exit(1)
-    except urllib.error.URLError as e:
-        print(json.dumps({"error": True, "message": str(e.reason)}))
+    max_retries = 3
+    result = None
+    for attempt in range(max_retries):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                result = json.loads(resp.read().decode("utf-8"))
+            break  # Success
+        except urllib.error.HTTPError as e:
+            error_body = e.read().decode("utf-8") if e.fp else ""
+            if e.code == 429 and attempt < max_retries - 1:
+                wait = 2 ** (attempt + 1)
+                print(json.dumps({"retry": True, "attempt": attempt + 1, "wait_seconds": wait, "reason": "rate_limited"}), file=sys.stderr)
+                time.sleep(wait)
+                req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
+                continue
+            if e.code == 400 and "FAILED_PRECONDITION" in error_body:
+                print(json.dumps({"error": True, "status": 400, "message": "Billing not enabled. Enable billing at https://aistudio.google.com/apikey"}))
+                sys.exit(1)
+            print(json.dumps({"error": True, "status": e.code, "message": error_body}))
+            sys.exit(1)
+        except urllib.error.URLError as e:
+            print(json.dumps({"error": True, "message": str(e.reason)}))
+            sys.exit(1)
+
+    if result is None:
+        print(json.dumps({"error": True, "message": "Max retries exceeded"}))
         sys.exit(1)
 
     # Extract image from response

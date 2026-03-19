@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2026-03-19
+
+### Breaking Changes
+- Removed `gemini-3-pro-image-preview` (Nano Banana Pro) — shut down by Google March 9, 2026
+- Replaced 6-component Reasoning Brief with Google's official 5-component formula (Subject → Action → Location/Context → Composition → Style)
+- Default resolution changed from `1K` to `2K` in fallback scripts
+- Banned prompt keywords: "8K", "masterpiece", "ultra-realistic", "high resolution" — use prestigious context anchors instead
+
+### Added
+- Banned Keywords section in prompt-engineering.md (Stable Diffusion-era terms that degrade quality)
+- Negative Prompts guidance (semantic reframing, ALL CAPS for constraints)
+- Prompt Length Guide (20-60 words quick draft → 200-300 complex)
+- Text Rendering section for Nano Banana 2
+- Domain-to-model routing table in gemini-models.md
+- Resolution defaults by domain mode
+- Error response taxonomy in mcp-tools.md (429, 400 FAILED_PRECONDITION, IMAGE_SAFETY)
+- Non-existent parameters warning in mcp-tools.md
+- `.claude/agents/brief-constructor.md` subagent for prompt construction
+- `CLAUDE.md` at repo root with development context and testing instructions
+- Mandatory reference loading instruction at top of SKILL.md
+- Full generation pipeline with retry logic and error handling in SKILL.md
+- Exponential backoff retry logic (429 handling) in generate.py and edit.py
+- FAILED_PRECONDITION billing error detection in fallback scripts
+- Prestigious context anchors replacing banned quality keywords in all templates
+
+### Changed
+- SKILL.md version bumped to 4.0.0 with improved frontmatter
+- gemini-models.md fully restructured with NB2/NB naming, updated pricing ($0.067/1K)
+- Model routing table uses 5-component references instead of 6-component
+- All prompt templates updated to use prestigious anchors instead of banned keywords
+- Prompt adaptation rules updated to remove banned keywords
+
+### Fixed
+- gemini-3-pro-image-preview listed as "Active" when it was dead since March 9
+- Pricing was stale ($0.039 for 3.1 Flash when actual is $0.067)
+- Rate limits updated to reflect 92% cut (Free: ~5-15 RPM / ~20-500 RPD)
+
 ## [3.0.0] - 2026-03-14
 
 ### Added
@@ -66,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Batch variations, multi-turn chat, prompt inspiration
 - Install script with validation
 
+[4.0.0]: https://github.com/AgriciDaniel/claude-banana/releases/tag/v4.0.0
 [3.0.0]: https://github.com/AgriciDaniel/claude-banana/releases/tag/v3.0.0
 [2.1.0]: https://github.com/AgriciDaniel/claude-banana/releases/tag/v2.1.0
 [2.0.0]: https://github.com/AgriciDaniel/claude-banana/releases/tag/v2.0.0
