@@ -38,7 +38,16 @@ Unlike simple API wrappers, Claude interprets your intent, selects domain expert
 
 ## Installation
 
-### Plugin Install
+### Plugin Install (Recommended)
+
+Add the marketplace and install:
+
+```shell
+/plugin marketplace add SaschaFitzner/banana-claude
+/plugin install banana-claude@banana-claude-marketplace
+```
+
+Or test locally:
 
 ```bash
 git clone --depth 1 https://github.com/SaschaFitzner/banana-claude.git
