@@ -64,7 +64,32 @@ bash banana-claude/install.sh
 
 </details>
 
-Get a free API key at [Google AI Studio](https://aistudio.google.com/apikey).
+### API Key Setup
+
+Get a free API key at [Google AI Studio](https://aistudio.google.com/apikey), then set it as environment variable:
+
+```bash
+export GOOGLE_AI_API_KEY="your-key-here"
+```
+
+To persist it, add the line to your `~/.zshrc` or `~/.bashrc`.
+
+<details>
+<summary>Using fio-vault (recommended for teams and secure key management)</summary>
+
+If you use [fio-vault](https://github.com/fitznerIO/fio-vault) for GPG-encrypted secret management:
+
+```bash
+# Store the key in your vault
+fio-vault set google-api-key GOOGLE_AI_API_KEY
+
+# Load secrets into your environment before using banana-claude
+source <(fio-vault env)
+```
+
+The scripts read `GOOGLE_AI_API_KEY` from the environment automatically -- no code changes needed.
+
+</details>
 
 ## Quick Start
 
