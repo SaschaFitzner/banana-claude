@@ -1,4 +1,6 @@
-<!-- Updated: 2026-03-19v2 -->
+<!-- Updated: 2026-04-02 -->
+
+> **Fork of [AgriciDaniel/banana-claude](https://github.com/AgriciDaniel/banana-claude)** -- original concept and Creative Director architecture by [@AgriciDaniel](https://github.com/AgriciDaniel). This fork removes the MCP dependency in favor of direct Gemini REST API calls via Python scripts.
 
 ![Banana Claude](screenshots/cover-image.webp)
 
@@ -9,8 +11,9 @@ AI image generation skill for Claude Code where **Claude acts as Creative Direct
 Unlike simple API wrappers, Claude interprets your intent, selects domain expertise, constructs optimized prompts using Google's official 5-component formula, and orchestrates Gemini for the best possible results.
 
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
-[![Version](https://img.shields.io/badge/version-1.4.1-coral)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.5.0-coral)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Fork of](https://img.shields.io/badge/fork%20of-AgriciDaniel%2Fbanana--claude-green)](https://github.com/AgriciDaniel/banana-claude)
 
 > **Blog:** [See banana-claude in action](https://agricidaniel.com/blog/banana-claude-ai-image-generation)
 
@@ -35,34 +38,26 @@ Unlike simple API wrappers, Claude interprets your intent, selects domain expert
 
 ## Installation
 
-### Plugin Install (Recommended)
+### From this fork
 
-Add the marketplace and install:
+```bash
+git clone --depth 1 https://github.com/SaschaFitzner/banana-claude.git
+claude --plugin-dir ./banana-claude
+```
+
+### From upstream (original, with MCP)
 
 ```shell
 /plugin marketplace add AgriciDaniel/banana-claude
 /plugin install banana-claude@banana-claude-marketplace
 ```
 
-Or test locally:
-
-```bash
-git clone --depth 1 https://github.com/AgriciDaniel/banana-claude.git
-claude --plugin-dir ./banana-claude
-```
-
 <details>
 <summary>Standalone Install (without plugin system)</summary>
 
 ```bash
-git clone --depth 1 https://github.com/AgriciDaniel/banana-claude.git
+git clone --depth 1 https://github.com/SaschaFitzner/banana-claude.git
 bash banana-claude/install.sh
-```
-
-**One-liner (curl):**
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/AgriciDaniel/banana-claude/main/install.sh | bash
 ```
 
 </details>
@@ -217,6 +212,17 @@ Contributions welcome! Please open an issue or submit a pull request.
 
 MIT License -- see [LICENSE](LICENSE) for details.
 
+## Fork Changes
+
+This fork differs from the [original](https://github.com/AgriciDaniel/banana-claude) in the following ways:
+
+- **No MCP dependency** -- Removed `@ycse/nanobanana-mcp`. All image generation uses direct Gemini REST API calls via Python scripts (`generate.py`, `edit.py`).
+- **No Node.js required** -- Only Python 3.6+ (stdlib only, zero pip dependencies).
+- **More features** -- Scripts support extended thinking (`--thinking`), resolution control (`--resolution`), and image-only mode (`--image-only`) directly.
+- **Lower cost** -- Stateless API calls use ~3x fewer input tokens than MCP chat sessions for iterative edits.
+
+See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
+
 ---
 
-Built for Claude Code by [@AgriciDaniel](https://github.com/AgriciDaniel)
+Originally built for Claude Code by [@AgriciDaniel](https://github.com/AgriciDaniel) -- fork maintained by [@SaschaFitzner](https://github.com/SaschaFitzner)
