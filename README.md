@@ -75,19 +75,16 @@ export GOOGLE_AI_API_KEY="your-key-here"
 To persist it, add the line to your `~/.zshrc` or `~/.bashrc`.
 
 <details>
-<summary>Using fio-vault (recommended for teams and secure key management)</summary>
+<summary>Using fio-vault (recommended for secure key management)</summary>
 
 If you use [fio-vault](https://github.com/fitznerIO/fio-vault) for GPG-encrypted secret management:
 
 ```bash
-# Store the key in your vault
-fio-vault set google-api-key GOOGLE_AI_API_KEY
-
-# Load secrets into your environment before using banana-claude
-source <(fio-vault env)
+# Store the key in your global vault
+fio-vault set google-api-key GOOGLE_AI_API_KEY --global
 ```
 
-The scripts read `GOOGLE_AI_API_KEY` from the environment automatically -- no code changes needed.
+That's it. The scripts automatically try `fio-vault get google-api-key --global` as fallback when no env var is set.
 
 </details>
 

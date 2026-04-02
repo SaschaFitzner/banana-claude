@@ -13,6 +13,7 @@ import argparse
 import base64
 import json
 import os
+import subprocess
 import sys
 import time
 import urllib.request
@@ -149,7 +150,16 @@ def main():
 
     api_key = args.api_key or os.environ.get("GOOGLE_AI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     if not api_key:
-        print(json.dumps({"error": True, "message": "No API key. Set GOOGLE_AI_API_KEY env or pass --api-key"}))
+        try:
+            result = subprocess.run(
+                ["fio-vault", "get", "google-api-key", "--global"],
+                capture_output=True, text=True, check=True,
+            )
+            api_key = result.stdout.strip()
+        except (FileNotFoundError, subprocess.CalledProcessError):
+            pass
+    if not api_key:
+        print(json.dumps({"error": True, "message": "No API key. Set GOOGLE_AI_API_KEY env, pass --api-key, or store in fio-vault: fio-vault set google-api-key GOOGLE_AI_API_KEY --global"}))
         sys.exit(1)
 
     result = generate_image(
