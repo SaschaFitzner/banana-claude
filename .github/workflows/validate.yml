@@ -34,13 +34,10 @@ jobs:
             .claude-plugin/plugin.json
             skills/banana/SKILL.md
             skills/banana/references/gemini-models.md
-            skills/banana/references/mcp-tools.md
             skills/banana/references/post-processing.md
             skills/banana/references/prompt-engineering.md
             skills/banana/references/cost-tracking.md
             skills/banana/references/presets.md
-            skills/banana/scripts/setup_mcp.py
-            skills/banana/scripts/validate_setup.py
             skills/banana/scripts/generate.py
             skills/banana/scripts/edit.py
             skills/banana/scripts/cost_tracker.py

@@ -2,7 +2,7 @@
 """Banana Claude -- CSV Batch Workflow
 
 Parse a CSV file of image generation requests and output a structured plan.
-Claude then executes each row via MCP.
+Claude then executes each row via generate.py.
 
 Usage:
     batch.py --csv path/to/file.csv

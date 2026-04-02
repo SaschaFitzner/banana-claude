@@ -5,7 +5,6 @@ argument-hint: "[generate|edit|chat|inspire|batch] <idea, path, or command>"
 metadata:
   version: "1.4.1"
   author: AgriciDaniel
-  mcp-package: "@ycse/nanobanana-mcp"
 ---
 
 # Banana Claude -- Creative Director for AI Image Generation
@@ -34,13 +33,13 @@ construct an optimized prompt using the 5-Component Formula from `references/pro
 | `/banana chat` | Multi-turn visual session (character/style consistent) |
 | `/banana inspire [category]` | Browse prompt database for ideas |
 | `/banana batch <idea> [N]` | Generate N variations (default: 3) |
-| `/banana setup` | Install MCP server and configure API key |
+| `/banana setup` | Configure API key and verify setup |
 | `/banana preset [list\|create\|show\|delete]` | Manage brand/style presets |
 | `/banana cost [summary\|today\|estimate]` | View cost tracking and estimates |
 
 ## Core Principle: Claude as Creative Director
 
-**NEVER** pass the user's raw text as-is to `gemini_generate_image`.
+**NEVER** pass the user's raw text as-is to the generation script.
 
 Follow this pipeline for every generation -- no exceptions:
 
@@ -49,7 +48,7 @@ Follow this pipeline for every generation -- no exceptions:
 3. Select domain mode (Step 2) -- check for presets (Step 1.5)
 4. Construct prompt using 5-component formula from prompt-engineering.md
 5. Select model and `imageSize` based on domain routing table in gemini-models.md
-6. Call the MCP generate tool (or fallback to direct API scripts)
+6. Execute the appropriate generation or editing script
 7. Check response:
    - If `finishReason: IMAGE_SAFETY` → apply safety rephrase, retry (max 3 attempts with user approval)
    - If empty response (no image parts) → verify responseModalities includes "IMAGE", retry once
@@ -147,7 +146,7 @@ For more templates see `references/prompt-engineering.md` → Proven Prompt Temp
 
 ### Step 4: Select Aspect Ratio
 
-Match ratio to use case -- call `set_aspect_ratio` BEFORE generating:
+Match ratio to use case -- pass `--aspect-ratio` flag to `generate.py`:
 
 | Use Case | Ratio | Why |
 |----------|-------|-----|
@@ -174,21 +173,47 @@ Choose output resolution based on intended use:
 | `2K` | **Default** -- quality assets, most use cases |
 | `4K` | Print production, hero images, final deliverables |
 
-Note: Resolution control (`imageSize`) depends on MCP package version support.
+### Step 5: Execute Generation
 
-### Step 5: Call the MCP
+Run the appropriate script:
 
-Use the appropriate MCP tool:
+**Image Generation (new image from prompt):**
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py \
+  --prompt "YOUR CONSTRUCTED PROMPT" \
+  --aspect-ratio "16:9" \
+  --resolution "2K" \
+  --model "gemini-3.1-flash-image-preview"
+```
 
-| MCP Tool | When |
-|----------|------|
-| `set_aspect_ratio` | Always call first if ratio differs from 1:1 |
-| `set_model` | Only if switching models |
-| `gemini_generate_image` | New image from prompt |
-| `gemini_edit_image` | Modify existing image |
-| `gemini_chat` | Multi-turn / iterative refinement |
-| `get_image_history` | Review session history |
-| `clear_conversation` | Reset session context |
+**Image Editing (modify existing image):**
+```bash
+python3 ${CLAUDE_SKILL_DIR}/scripts/edit.py \
+  --image PATH_TO_IMAGE \
+  --prompt "YOUR EDIT INSTRUCTION" \
+  --model "gemini-3.1-flash-image-preview"
+```
+
+**Script flags reference:**
+
+| Flag | generate.py | edit.py | Default |
+|------|:-----------:|:-------:|---------|
+| `--prompt` | Required | Required | -- |
+| `--image` | -- | Required | -- |
+| `--aspect-ratio` | Optional | -- | `1:1` |
+| `--resolution` | Optional | -- | `2K` |
+| `--model` | Optional | Optional | `gemini-3.1-flash-image-preview` |
+| `--thinking` | Optional | -- | none |
+| `--image-only` | Optional | -- | false |
+| `--api-key` | Optional | Optional | `$GOOGLE_AI_API_KEY` env |
+
+Both scripts output JSON to stdout. On success:
+```json
+{"path": "~/Documents/nanobanana_generated/banana_TIMESTAMP.png", "model": "...", "aspect_ratio": "...", "resolution": "...", "text": "..."}
+```
+On error: `{"error": true, "message": "..."}` with non-zero exit code.
+
+Scripts handle 429 retries internally (exponential backoff, max 3 attempts).
 
 ### Step 6: Post-Processing (when needed)
 
@@ -240,11 +265,11 @@ Common intelligent edit transformations:
 
 ## Multi-turn Chat (`/banana chat`)
 
-Use `gemini_chat` for iterative creative sessions:
+For iterative creative sessions, Claude tracks the conversation context:
 
-1. Generate initial concept with full Reasoning Brief
-2. Refine with specific, targeted changes (not full re-descriptions)
-3. Session maintains character consistency and style across turns
+1. Generate initial concept with full Reasoning Brief via `generate.py`
+2. For each refinement, use `edit.py` with the path to the most recent image
+3. Enrich each edit prompt with accumulated context (original style, character details, prior changes) so Gemini produces consistent results
 4. Use for: character design sheets, sequential storytelling, progressive refinement
 
 ## Prompt Inspiration (`/banana inspire`)
@@ -276,11 +301,11 @@ For `/banana batch <idea> [N]`, generate N variations:
    - Variation 1: Different lighting (golden hour → blue hour)
    - Variation 2: Different composition (close-up → wide shot)
    - Variation 3: Different style (photorealistic → illustration)
-3. Call `gemini_generate_image` N times with distinct prompts
+3. Call `generate.py` N times with distinct prompts
 4. Present all results with brief descriptions of what varies
 
 For CSV-driven batch: `python3 ${CLAUDE_SKILL_DIR}/scripts/batch.py --csv path/to/file.csv`
-The script outputs a generation plan with cost estimates. Execute each row via MCP.
+The script outputs a generation plan with cost estimates. Execute each row via `generate.py`.
 
 ## Model Routing
 
@@ -294,19 +319,21 @@ Select model based on task requirements:
 | Text-heavy | `gemini-3.1-flash-image-preview` | 2K | 5-component, thinking: high | Logos, infographics, text rendering |
 | Batch/bulk | Any model via Batch API | 1K | 5-component | Non-urgent bulk -- 50% cost discount |
 
-Default: `gemini-3.1-flash-image-preview`. Switch with `set_model` when routing to 2.5 Flash.
+Default: `gemini-3.1-flash-image-preview`. Pass `--model gemini-2.5-flash-image` when routing to 2.5 Flash.
 
 ## Error Handling
 
 | Error | Resolution |
 |-------|-----------|
-| MCP not configured | Run `/banana setup` |
-| API key invalid | New key at https://aistudio.google.com/apikey |
-| Rate limited (429) | Wait 60s, retry with exponential backoff. Free tier: ~5-15 RPM / ~20-500 RPD |
+| API key missing | Set `GOOGLE_AI_API_KEY` environment variable. Get a free key at https://aistudio.google.com/apikey |
+| API key invalid | Regenerate at https://aistudio.google.com/apikey |
+| Python not found | Install Python 3.6+ and ensure `python3` is in PATH |
+| Rate limited (429) | Scripts retry automatically (exponential backoff, 3 attempts). Free tier: ~5-15 RPM / ~20-500 RPD. If persistent, wait 60s. |
 | `IMAGE_SAFETY` | Output blocked -- analyze prompt for triggers, suggest 2-3 rephrased alternatives. See `references/prompt-engineering.md` Safety Rephrase section. Do NOT auto-retry without user approval. |
 | `PROHIBITED_CONTENT` | Topic is blocked (violence, NSFW, real public figures). Non-retryable -- explain why and suggest alternative concepts. |
 | Safety filter false positive | Filters are overly cautious. Rephrase using abstraction, artistic framing, or metaphor. Common: "dog" blocked → try "a friendly golden retriever in a sunny park". See `references/prompt-engineering.md` Safety Rephrase Strategies. |
-| MCP unavailable | Fall back to direct API: `python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py --prompt "..." --aspect-ratio "16:9"` or `python3 ${CLAUDE_SKILL_DIR}/scripts/edit.py --image PATH --prompt "..."`. These call the Gemini REST API directly with no MCP dependency. |
+| Empty response (no image) | Verify prompt is not empty. Scripts set `responseModalities` correctly by default; this usually indicates an API-side issue. Retry once. |
+| HTTP 400 FAILED_PRECONDITION | Billing not enabled. User must enable billing at https://aistudio.google.com/apikey |
 | Vague request | Ask clarifying questions before generating |
 | Poor result quality | Review Reasoning Brief -- likely too abstract. Load `references/prompt-engineering.md` Proven Templates and rebuild with specifics. |
 
@@ -331,15 +358,14 @@ After generating, always provide:
 Load on-demand -- do NOT load all at startup:
 - `references/prompt-engineering.md` -- Domain mode details, modifier libraries, advanced techniques
 - `references/gemini-models.md` -- Model specs, rate limits, capabilities
-- `references/mcp-tools.md` -- MCP tool parameters and response formats
 - `references/post-processing.md` -- FFmpeg/ImageMagick pipeline recipes, green screen transparency
 - `references/cost-tracking.md` -- Pricing table, usage guide, free tier limits
 - `references/presets.md` -- Brand preset schema, examples, merge behavior
 
 ## Setup
 
-Run `python3 scripts/setup_mcp.py` to configure the MCP server. Requires:
-- Node.js 18+ (npx)
+Requires:
+- Python 3.6+
 - Google AI API key (free at https://aistudio.google.com/apikey)
 
-Verify: `python3 scripts/validate_setup.py`
+Set the API key as environment variable: `export GOOGLE_AI_API_KEY="your-key-here"`

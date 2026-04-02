@@ -5,7 +5,7 @@ This file is read by Claude Code when working inside this repository.
 ## What this repo is
 
 `banana-claude` is a Claude Code **plugin** that enables AI image generation
-using Google's Gemini Nano Banana models via MCP. Claude acts as a Creative
+using Google's Gemini Nano Banana models. Claude acts as a Creative
 Director: it interprets intent, selects domain expertise, constructs
 optimized prompts, and orchestrates Gemini API calls.
 
@@ -40,14 +40,13 @@ This repo follows the official Claude Code plugin layout:
 | `skills/banana/SKILL.md` | Main orchestrator. Edit to change Claude's behavior. |
 | `skills/banana/references/gemini-models.md` | Model roster, routing table, resolution defaults. Update when Google releases new models. |
 | `skills/banana/references/prompt-engineering.md` | The prompt construction system. Update when Google publishes new guidance. |
-| `skills/banana/references/mcp-tools.md` | API parameter reference. Update when Google changes the API. |
-| `skills/banana/scripts/generate.py` | Direct API fallback for generation. Uses urllib.request (stdlib). |
-| `skills/banana/scripts/edit.py` | Direct API fallback for editing. Uses urllib.request (stdlib). |
+| `skills/banana/scripts/generate.py` | Image generation via Gemini REST API. Uses urllib.request (stdlib). |
+| `skills/banana/scripts/edit.py` | Image editing via Gemini REST API. Uses urllib.request (stdlib). |
 | `agents/brief-constructor.md` | Subagent for prompt construction. |
 
 ## Scripts use stdlib only
 
-The fallback scripts (`generate.py`, `edit.py`) use Python's `urllib.request`
+The scripts (`generate.py`, `edit.py`) use Python's `urllib.request`
 to call the Gemini REST API directly. They have ZERO pip dependencies by design.
 Do NOT add `google-genai` or `requests` as dependencies -- the stdlib approach
 ensures the skill works on any system with Python 3.6+.
@@ -98,7 +97,7 @@ Do NOT set version in `marketplace.json` -- it conflicts with `plugin.json` (plu
 
 - `.claude-plugin/` contains ONLY `plugin.json` and `marketplace.json`. Never put skills, agents, or commands in this directory.
 - `skills/` and `agents/` must be at plugin root (not inside `.claude-plugin/`).
-- Plugin variable `${CLAUDE_PLUGIN_ROOT}` resolves to the plugin cache directory. Use for hook commands and MCP configs.
+- Plugin variable `${CLAUDE_PLUGIN_ROOT}` resolves to the plugin cache directory. Use for hook commands.
 - SKILL.md uses `${CLAUDE_SKILL_DIR}` for script paths -- this is a semantic marker Claude interprets based on context. Works in both plugin and standalone mode.
 - Relative paths in SKILL.md (`references/`, `scripts/`) resolve relative to SKILL.md location. These work in both modes.
 - Test locally with `claude --plugin-dir .` (loads plugin without installing).

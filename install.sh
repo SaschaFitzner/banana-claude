@@ -4,8 +4,7 @@
 # For plugin installation, use: /plugin marketplace add AgriciDaniel/banana-claude
 #
 # Usage:
-#   ./install.sh                    # Install skill only
-#   ./install.sh --with-mcp KEY    # Install skill + configure MCP with API key
+#   ./install.sh                    # Install skill
 #   ./install.sh --uninstall        # Remove skill
 
 set -euo pipefail
@@ -51,21 +50,6 @@ info "Skill installed to $SKILL_DIR"
 # Create data directory for cost tracking and presets
 mkdir -p "$HOME/.banana/presets"
 info "Created ~/.banana/ for cost tracking and presets"
-
-# Configure MCP if requested
-if [[ "${1:-}" == "--with-mcp" ]]; then
-    API_KEY="${2:-}"
-    if [[ -z "$API_KEY" ]]; then
-        error "API key required: ./install.sh --with-mcp YOUR_KEY"
-        exit 1
-    fi
-    info "Configuring MCP server..."
-    python3 "$SKILL_DIR/scripts/setup_mcp.py" --key "$API_KEY"
-fi
-
-# Validate
-info "Running validation..."
-python3 "$SKILL_DIR/scripts/validate_setup.py"
 
 echo ""
 info "Installation complete!"

@@ -29,4 +29,4 @@ Include:
 
 ## Scope
 
-This policy covers the Banana Claude skill code, install scripts, and documentation. It does not cover the upstream `@ycse/nanobanana-mcp` package or Google's Gemini API.
+This policy covers the Banana Claude skill code, install scripts, and documentation. It does not cover Google's Gemini API.

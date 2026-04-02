@@ -65,14 +65,6 @@ bash banana-claude/install.sh
 curl -fsSL https://raw.githubusercontent.com/AgriciDaniel/banana-claude/main/install.sh | bash
 ```
 
-**With MCP Setup:**
-
-```bash
-git clone --depth 1 https://github.com/AgriciDaniel/banana-claude.git
-cd banana-claude
-./install.sh --with-mcp YOUR_API_KEY
-```
-
 </details>
 
 Get a free API key at [Google AI Studio](https://aistudio.google.com/apikey).
@@ -110,7 +102,7 @@ Claude will ask about your brand, select the right domain mode (Cinema, Product,
 | `/banana chat` | Multi-turn visual session (maintains consistency) |
 | `/banana inspire [category]` | Browse 2,500+ prompt database |
 | `/banana batch <idea> [N]` | Generate N variations (default: 3) |
-| `/banana setup` | Configure MCP and API key |
+| `/banana setup` | Configure API key and verify setup |
 | `/banana preset [list\|create\|show\|delete]` | Manage brand/style presets |
 | `/banana cost [summary\|today\|estimate]` | View cost tracking and estimates |
 
@@ -183,15 +175,12 @@ banana-claude/                         # Claude Code Plugin
 │   ├── references/
 │   │   ├── prompt-engineering.md      # 5-component formula, banned keywords, safety rephrase
 │   │   ├── gemini-models.md           # Model specs, rate limits, capabilities
-│   │   ├── mcp-tools.md              # MCP tool parameters and responses
 │   │   ├── post-processing.md        # ImageMagick/FFmpeg pipelines, green screen
 │   │   ├── cost-tracking.md          # Pricing table, usage guide
 │   │   └── presets.md                # Brand preset schema and examples
 │   └── scripts/
-│       ├── setup_mcp.py              # Configure MCP in Claude Code
-│       ├── validate_setup.py         # Verify installation
-│       ├── generate.py               # Direct API fallback -- generation
-│       ├── edit.py                   # Direct API fallback -- editing
+│       ├── generate.py               # Image generation via Gemini REST API
+│       ├── edit.py                   # Image editing via Gemini REST API
 │       ├── cost_tracker.py           # Cost logging and summaries
 │       ├── presets.py                # Brand/style preset management
 │       └── batch.py                  # CSV batch workflow parser
@@ -202,7 +191,7 @@ banana-claude/                         # Claude Code Plugin
 ## Requirements
 
 - [Claude Code](https://github.com/anthropics/claude-code)
-- Node.js 18+ (for npx)
+- Python 3.6+
 - Google AI API key (free tier: ~5-15 RPM / ~20-500 RPD, cut ~92% Dec 2025)
 - ImageMagick (optional, for post-processing)
 

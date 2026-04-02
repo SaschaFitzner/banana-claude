@@ -125,7 +125,7 @@ Reminiscent of Dorothea Lange's documentary portraiture"
 ## Advanced Techniques
 
 ### Character Consistency (Multi-turn)
-Use `gemini_chat` and maintain descriptive anchors:
+Use `edit.py` with the previous image path and maintain descriptive anchors:
 - First turn: Generate character with exhaustive physical description
 - Following turns: Reference "the same character" + repeat 2-3 key identifiers
 - Key identifiers: hair color/style, distinctive clothing, facial feature
@@ -249,7 +249,7 @@ to Gemini's natural language format:
 
 | Source Syntax | Gemini Equivalent |
 |---------------|-------------------|
-| `--ar 16:9` | Call `set_aspect_ratio("16:9")` separately |
+| `--ar 16:9` | Pass `--aspect-ratio "16:9"` to `generate.py` |
 | `--v 6`, `--style raw` | Remove -- Gemini has no version/style flags |
 | `--chaos 50` | Describe variety: "unexpected, surreal composition" |
 | `--no trees` | Positive framing: "open clearing with no vegetation" |
@@ -269,7 +269,7 @@ to Gemini's natural language format:
 7. **Overlong prompts** -- Diminishing returns past ~200 words; be precise, not verbose
 8. **Text longer than ~25 characters** -- Rendering degrades rapidly past this limit
 9. **Burying key details at the end** -- In long prompts, details placed last may be deprioritized; put critical specifics (exact text, key constraints) in the first third of the prompt
-10. **Not iterating with follow-up prompts** -- Use `gemini_chat` for progressive refinement instead of trying to get everything right in one generation
+10. **Not iterating with follow-up prompts** -- Use `edit.py` for progressive refinement instead of trying to get everything right in one generation
 
 ## Proven Prompt Templates
 

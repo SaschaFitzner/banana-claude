@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-04-02
+
+### Breaking Changes
+- Removed MCP dependency (`@ycse/nanobanana-mcp`). Python scripts are now the sole execution path.
+- Node.js/npx is no longer required
+- Removed `setup_mcp.py` and `validate_setup.py`
+- Deleted `references/mcp-tools.md` (content already covered in `gemini-models.md`)
+
+### Changed
+- `generate.py` and `edit.py` are now primary (no longer labeled "fallback")
+- SKILL.md Step 5 rewritten for direct script execution
+- Multi-turn editing uses `edit.py` with Claude tracking conversation context
+- `/banana setup` now just verifies API key and Python
+
+### Removed
+- MCP server configuration (`setup_mcp.py`)
+- `--with-mcp` install flag
+- `"mcp"` keyword from `plugin.json` and `CITATION.cff`
+
+### Migration
+- If you previously configured the MCP server, remove the `nanobanana-mcp` entry from `~/.claude/settings.json`
+
 ## [1.4.1] - 2026-03-27
 
 ### Changed

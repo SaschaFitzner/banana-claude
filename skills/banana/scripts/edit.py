@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Banana Claude -- Direct API Fallback: Image Editing
+"""Banana Claude -- Image Editing
 
-Edit images via Gemini REST API when MCP is unavailable.
+Edit images via Gemini REST API.
 Uses only Python stdlib (no pip dependencies).
 
 Usage:
