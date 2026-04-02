@@ -38,18 +38,11 @@ Unlike simple API wrappers, Claude interprets your intent, selects domain expert
 
 ## Installation
 
-### From this fork
+### Plugin Install
 
 ```bash
 git clone --depth 1 https://github.com/SaschaFitzner/banana-claude.git
 claude --plugin-dir ./banana-claude
-```
-
-### From upstream (original, with MCP)
-
-```shell
-/plugin marketplace add AgriciDaniel/banana-claude
-/plugin install banana-claude@banana-claude-marketplace
 ```
 
 <details>
