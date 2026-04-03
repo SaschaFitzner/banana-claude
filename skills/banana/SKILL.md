@@ -9,7 +9,7 @@ metadata:
 
 # Banana Claude — Creative Director for AI Image Generation
 
-## MANDATORY — Read before every generation
+## MANDATORY — Read before every operation
 
 ALWAYS read BEFORE constructing any prompt or calling any script:
 1. `references/gemini-models.md` — model selection, parameters, rate limits

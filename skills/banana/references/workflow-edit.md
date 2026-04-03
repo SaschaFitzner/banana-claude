@@ -9,7 +9,7 @@
 3. **Enhance instruction** — NEVER pass raw user text. Expand the edit instruction with edge-preserving detail, positive framing, and style-consistent continuation
 4. **Execute edit.py** — Run with enhanced instruction (see syntax below)
 5. **Verify** — Confirm the output file exists; NEVER report success without a valid path
-6. **Log cost** — Record the edit call via cost_tracker.py
+6. **Log cost** — `python3 ${CLAUDE_SKILL_DIR}/scripts/cost_tracker.py log --model MODEL --resolution na --prompt "edit: [brief description]"`
 
 ---
 
@@ -57,5 +57,4 @@ On error: `{"error": true, "message": "..."}` with non-zero exit code.
 
 ## Safety and Errors
 
-- `IMAGE_SAFETY` on edit output — rephrase using Safety Rephrase strategies in `references/prompt-engineering.md`. NEVER auto-retry without user approval.
-- HTTP 429 — scripts retry automatically (exponential backoff, 3 attempts).
+See SKILL.md → Gemini-Specific Errors for `IMAGE_SAFETY` and `PROHIBITED_CONTENT` handling. HTTP 429 — scripts retry automatically (exponential backoff, 3 attempts).

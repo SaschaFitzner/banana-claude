@@ -69,7 +69,7 @@ Build the prompt using the **5-Component Formula** from `references/prompt-engin
 - Name real brands for styling: "Lululemon", "Tom Ford" (triggers visual associations)
 - Include micro-details: "sweat droplets on collarbones", "baby hairs stuck to neck"
 - Use prestigious context anchors: "Vanity Fair editorial," "National Geographic cover"
-- NEVER use banned keywords: "8K", "masterpiece", "ultra-realistic", "high resolution" — use `imageSize` param instead
+- NEVER use banned keywords (see Quick Reference in SKILL.md) — use `imageSize` param instead
 - NEVER write "a dark-themed ad showing..." — describe the SCENE, not the concept
 - For critical constraints use ALL CAPS: "MUST contain exactly three figures"
 - For products: say "prominently displayed" to ensure visibility
@@ -211,7 +211,7 @@ Use `magick` (v7) if available, fall back to `convert` (v6). See `references/pos
 | Standard | `gemini-3.1-flash-image-preview` | 2K | Full 5-component |
 | Quality | `gemini-3.1-flash-image-preview` | 2K/4K | 5-component + prestigious anchors |
 | Text-heavy | `gemini-3.1-flash-image-preview` | 2K | 5-component, `--thinking high` |
-| Batch/bulk | Any model via Batch API | 1K | 5-component |
+| Batch/bulk | Any model | 1K | 5-component, sequential generate.py calls |
 
 Default: `gemini-3.1-flash-image-preview`. Pass `--model gemini-2.5-flash-image` for budget routing.
 
