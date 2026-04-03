@@ -1,6 +1,6 @@
-<!-- Updated: 2026-04-02 -->
+<!-- Updated: 2026-04-03 -->
 
-> **Fork of [AgriciDaniel/banana-claude](https://github.com/AgriciDaniel/banana-claude)** -- original concept and Creative Director architecture by [@AgriciDaniel](https://github.com/AgriciDaniel). This fork removes the MCP dependency in favor of direct Gemini REST API calls via Python scripts.
+> **Rewrite based on [AgriciDaniel/banana-claude](https://github.com/AgriciDaniel/banana-claude)** -- original concept and Creative Director idea by [@AgriciDaniel](https://github.com/AgriciDaniel). This version is a ground-up rewrite: MCP dependency removed, architecture redesigned as progressive-disclosure router, autonomous intent detection added, and all scripts rewritten as zero-dependency Python.
 
 ![Banana Claude](screenshots/cover-image.webp)
 
@@ -243,9 +243,9 @@ Contributions welcome! Please open an issue or submit a pull request.
 
 MIT License -- see [LICENSE](LICENSE) for details.
 
-## Fork Changes
+## What Changed from the Original
 
-This fork differs from the [original](https://github.com/AgriciDaniel/banana-claude) in the following ways:
+This is a complete rewrite of the [original banana-claude](https://github.com/AgriciDaniel/banana-claude). The Creative Director concept and domain mode idea originate from [@AgriciDaniel](https://github.com/AgriciDaniel) -- everything else has been redesigned:
 
 - **No MCP dependency** -- Removed `@ycse/nanobanana-mcp`. All image generation uses direct Gemini REST API calls via Python scripts (`generate.py`, `edit.py`).
 - **No Node.js required** -- Only Python 3.6+ (stdlib only, zero pip dependencies).
@@ -259,4 +259,4 @@ See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
 ---
 
 Maintained by [Sascha Fitzner](https://github.com/SaschaFitzner) — [fitznerIO GmbH](https://fitzner.io)
-Original concept and Creative Director architecture by [@AgriciDaniel](https://github.com/AgriciDaniel)
+Original concept and Creative Director idea by [@AgriciDaniel](https://github.com/AgriciDaniel)
