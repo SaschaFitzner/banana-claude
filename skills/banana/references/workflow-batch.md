@@ -12,15 +12,16 @@
 
 ## Variations Strategy
 
-For `/banana batch <idea> [N]` (default N=3), rotate ONE component per variation:
+For `/banana batch <idea> [N]` (default N=3), rotate ONE component per variation. Rotating multiple components simultaneously makes results uncontrollable and impossible to compare.
 
 | Variation | Component to rotate | Example |
 |-----------|--------------------|---------|
 | 1 | Lighting | golden hour → blue hour → overcast diffused |
 | 2 | Composition | tight close-up → medium shot → wide establishing |
 | 3 | Style | photorealistic → illustrated → minimal flat vector |
+| 4+ | Continue rotating: Perspective, Color grade, Subject age/demographic, Time period | — |
 
-ALWAYS keep Subject, Action, and Context identical across variations. Only the rotated component changes.
+ALWAYS keep Subject, Action, and Context identical across all variations.
 
 ## CSV Batch
 
@@ -28,7 +29,12 @@ For larger batches with distinct concepts per row:
 ```bash
 python3 ${CLAUDE_SKILL_DIR}/scripts/batch.py --csv path/to/file.csv
 ```
-The script outputs a generation plan with cost estimates. Review the plan, then execute each row via `generate.py`. See `references/cost-tracking.md` for per-image pricing to validate the estimate.
+The script outputs a generation plan with cost estimates. Before executing, review the plan:
+- Check estimated cost against user's budget
+- Flag any prompt that may trigger `IMAGE_SAFETY`
+- Confirm all rows have distinct subjects
+
+Then execute each row via `generate.py`. See `references/cost-tracking.md` for per-image pricing.
 
 ## Cost Estimate
 
@@ -46,5 +52,5 @@ Show the estimate to the user and wait for confirmation before proceeding.
 After all images are generated, log the session:
 ```bash
 python3 ${CLAUDE_SKILL_DIR}/scripts/cost_tracker.py log \
-  --model MODEL --resolution RES --prompt "batch: [idea summary]"
+  --model gemini-3.1-flash-image-preview --resolution 2K --prompt "batch: [idea summary]"
 ```

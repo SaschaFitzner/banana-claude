@@ -1,15 +1,15 @@
 # Workflow: Edit
 
-> Read `gemini-models.md` and `prompt-engineering.md` first before executing this workflow.
+> Prerequisite: `gemini-models.md` and `prompt-engineering.md` already read per SKILL.md routing.
 
 ## Edit Pipeline
 
-1. **Read image** — Confirm the file path exists and is a valid image
+1. **Read image** — Confirm the file path exists and is a valid image. If path does not exist, ask the user to confirm or provide the correct path before proceeding.
 2. **Analyze** — Understand what the user wants changed; check if any brand preset applies
 3. **Enhance instruction** — NEVER pass raw user text. Expand the edit instruction with edge-preserving detail, positive framing, and style-consistent continuation
 4. **Execute edit.py** — Run with enhanced instruction (see syntax below)
 5. **Verify** — Confirm the output file exists; NEVER report success without a valid path
-6. **Log cost** — `python3 ${CLAUDE_SKILL_DIR}/scripts/cost_tracker.py log --model MODEL --resolution na --prompt "edit: [brief description]"`
+6. **Log cost** — `python3 ${CLAUDE_SKILL_DIR}/scripts/cost_tracker.py log --model gemini-3.1-flash-image-preview --resolution na --prompt "edit: [brief description]"`
 
 ---
 
@@ -47,14 +47,12 @@ python3 ${CLAUDE_SKILL_DIR}/scripts/edit.py \
 | `--model` | No | `gemini-3.1-flash-image-preview` |
 | `--api-key` | No | `$GOOGLE_AI_API_KEY` env |
 
+Note: `edit.py` does not support `--resolution` — output resolution matches the source image.
+
 **JSON output on success:**
 ```json
 {"path": "~/Documents/nanobanana_generated/banana_TIMESTAMP.png", "model": "...", "text": "..."}
 ```
 On error: `{"error": true, "message": "..."}` with non-zero exit code.
-
----
-
-## Safety and Errors
 
 See SKILL.md → Gemini-Specific Errors for `IMAGE_SAFETY` and `PROHIBITED_CONTENT` handling. HTTP 429 — scripts retry automatically (exponential backoff, 3 attempts).

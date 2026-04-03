@@ -12,7 +12,7 @@
 
 ## Context Tracking
 
-After each generation or edit, maintain internally:
+After each generation or edit, maintain in the active conversation context (working memory):
 1. **Current image path** — the last successfully generated/edited file
 2. **Character anchors** — 2-3 key physical identifiers established in the first turn (hair color/style, distinctive clothing, facial feature)
 3. **Style anchors** — domain mode, lighting style, color grade, aspect ratio from the initial brief
@@ -23,7 +23,9 @@ After each generation or edit, maintain internally:
 Enrich every edit prompt with accumulated context:
 - Reference "the same character" + repeat 2-3 key identifiers from the first generation
 - Repeat the original style anchors in each edit instruction to prevent drift
-- See `references/prompt-engineering.md` → Character Consistency (Multi-turn) for the multi-image reference technique
+- See `references/prompt-engineering.md` → Character Consistency (Multi-turn) for the technique of prepending the previous output image to the next edit call to reinforce visual continuity
+
+**Character drift warning:** After 4+ consecutive edit turns, if character consistency breaks down, consider re-generating from text-to-image using the accumulated style anchors as the new base brief.
 
 ## Use Cases
 
@@ -36,5 +38,5 @@ Best suited for:
 ## Session End
 
 When the user is satisfied, offer to:
-- Export a summary of the crafted prompts used across all turns
+- Output all prompts used across all turns as a numbered markdown list
 - Log the total session cost via `references/cost-tracking.md`
