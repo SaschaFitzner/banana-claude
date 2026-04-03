@@ -1,6 +1,6 @@
 # Workflow: Chat (Multi-turn Visual Session)
 
-> Multi-turn creative sessions with character and style consistency across iterations.
+> Multi-turn creative sessions with character and style consistency across iterations. This workflow orchestrates `workflow-generate.md` (first image) and `workflow-edit.md` (refinements) — load those as needed.
 
 ## Session Rules
 

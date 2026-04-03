@@ -37,7 +37,7 @@ This repo follows the official Claude Code plugin layout:
 
 | File | Purpose |
 |---|---|
-| `skills/banana/SKILL.md` | Router — routes subcommands to workflow references. Edit to change routing logic. |
+| `skills/banana/SKILL.md` | Router — routes subcommands and natural language intent to workflow references. Edit to change routing or intent detection logic. |
 | `skills/banana/references/workflow-generate.md` | Full 9-step generate pipeline: intent analysis, domain mode, prompt construction, aspect ratio, resolution, execution, post-processing, error recovery, cost logging. |
 | `skills/banana/references/workflow-edit.md` | Edit pipeline: intelligent instruction enhancement, edit.py syntax, safety handling. |
 | `skills/banana/references/workflow-chat.md` | Multi-turn session rules: context tracking, character consistency, session management. |

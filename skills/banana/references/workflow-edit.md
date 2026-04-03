@@ -1,10 +1,10 @@
 # Workflow: Edit
 
-> Prerequisite: `gemini-models.md` and `prompt-engineering.md` already read per SKILL.md routing.
+> **Prerequisites:** If not already loaded, read `references/prompt-engineering.md` before step 3. Default model: `gemini-3.1-flash-image-preview`.
 
 ## Edit Pipeline
 
-1. **Read image** — Confirm the file path exists and is a valid image. If path does not exist, ask the user to confirm or provide the correct path before proceeding.
+1. **Read image** — Confirm the file path exists and is a valid image. If the user referenced an image without a path, check the conversation context for the most recently generated/edited image path. If none found, ask for the path.
 2. **Analyze** — Understand what the user wants changed; check if any brand preset applies
 3. **Enhance instruction** — NEVER pass raw user text. Expand the edit instruction with edge-preserving detail, positive framing, and style-consistent continuation
 4. **Execute edit.py** — Run with enhanced instruction (see syntax below)

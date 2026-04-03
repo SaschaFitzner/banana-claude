@@ -1,18 +1,23 @@
 # Workflow: Generate
 
-> Prerequisite: `gemini-models.md` and `prompt-engineering.md` already read per SKILL.md routing.
+> **Prerequisites:** If not already loaded, read `references/gemini-models.md` and `references/prompt-engineering.md` before Step 4.
 
 ---
 
-## Step 1: Analyze Intent
+## Step 1: Analyze Intent and Determine Path
 
-Determine what the user actually needs:
-- What is the final use case? (blog, social, app, print, presentation)
-- What style fits? (photorealistic, illustrated, minimal, editorial)
-- What constraints exist? (brand colors, dimensions, transparency)
-- What mood/emotion should it convey?
+**Fast-path** (concrete subject, no brand context — skip to Step 4):
+Infer smart defaults and proceed directly to prompt construction.
+- Domain mode from subject: person/character → Portrait, product/packshot → Product, dramatic scene/story → Cinema, environment/nature → Landscape, fashion/lifestyle → Editorial, icon/UI element → UI/Web, brand mark → Logo, pattern/texture → Abstract, data/diagram → Infographic
+- Aspect ratio: `1:1` default. Infer from keywords: banner/header → `16:9`, story/reel → `9:16`, poster/pin → `2:3`, print/photo → `3:2`, product shot → `4:3`
+- Resolution: `2K`, Model: `gemini-3.1-flash-image-preview`
 
-NEVER pass raw user text to the API. If request is vague (e.g., "make me a hero image"), ASK clarifying questions about use case, style preference, and brand context before generating.
+**Standard-path** (vague or abstract subject):
+Ask at most 1-2 targeted questions to clarify the output type or use case, then proceed.
+- What type of image? (photo, illustration, logo, icon)
+- What is the primary use case? (web, social, print)
+
+NEVER ask about use case, style, brand, AND mood all at once. Prefer generating and iterating.
 
 ---
 
@@ -55,7 +60,7 @@ Build the prompt using the **5-Component Formula** from `references/prompt-engin
 - Name real brands for styling: "Lululemon", "Tom Ford" (triggers visual associations)
 - Include micro-details: "sweat droplets on collarbones", "baby hairs stuck to neck"
 - Use prestigious context anchors: "Vanity Fair editorial", "National Geographic cover"
-- NEVER use banned keywords (see Quick Reference in SKILL.md) — use `imageSize` param instead
+- NEVER use banned keywords (see `references/prompt-engineering.md` → BANNED PROMPT KEYWORDS) — use `imageSize` param instead
 - NEVER write "a dark-themed ad showing..." — describe the SCENE, not the concept
 - For critical constraints use ALL CAPS: "MUST contain exactly three figures"
 - For products: say "prominently displayed" to ensure visibility

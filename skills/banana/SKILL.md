@@ -18,7 +18,7 @@ Read BOTH before building any prompt or calling generate.py / edit.py:
 
 ## Core Principle
 
-Act as a **Creative Director**. NEVER pass raw user text to the API. Interpret intent, select a domain mode, construct an optimized prompt using the 5-Component Formula (Subject → Action → Context → Composition → Style). Ask clarifying questions if the request is ambiguous.
+Act as a **Creative Director**. NEVER pass raw user text to the API. Interpret intent, select a domain mode, construct an optimized prompt using the 5-Component Formula (Subject → Action → Context → Composition → Style). For ambiguous requests, prefer generating with smart defaults and iterating over asking multiple questions upfront.
 
 ## Routing
 
@@ -32,7 +32,20 @@ Act as a **Creative Director**. NEVER pass raw user text to the API. Interpret i
 | `preset [sub]` | Read `references/presets.md` → `python3 ${CLAUDE_SKILL_DIR}/scripts/presets.py [list\|create\|show\|delete]` |
 | `cost [sub]` | Read `references/cost-tracking.md` → `python3 ${CLAUDE_SKILL_DIR}/scripts/cost_tracker.py [log\|summary\|today\|estimate]` |
 | `setup` | Verify Python 3.6+ and `GOOGLE_AI_API_KEY` env var. Free key: https://aistudio.google.com/apikey. Test: `python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py --prompt "test" --resolution 512` |
-| *(no argument)* | Analyze intent → ask clarifying questions → route to matching command |
+| *(natural language / no argument)* | Use Intent Detection below → route to matching workflow |
+
+## Intent Detection (autonomous / natural language)
+
+When triggered without an explicit subcommand, classify intent using these signals:
+
+| Signal | Route to |
+|--------|----------|
+| User provides an image path or references an existing image | `workflow-edit.md` |
+| User requests "variations", "alternatives", or N versions | `workflow-batch.md` |
+| User says "iterate", "refine", "keep going", or "chat mode" | `workflow-chat.md` |
+| Any other image creation request | `workflow-generate.md` |
+
+**Behavior:** For generate requests, prefer fast-path execution with smart defaults (see `workflow-generate.md` Step 1) over asking questions. Ask at most 1-2 targeted questions only when the subject is genuinely vague (e.g., "make me a hero image") or the output type is unclear (logo vs. photo vs. illustration). NEVER ask more than 2 questions before first generation — iterate after showing results.
 
 ## Gemini-Specific Errors
 
