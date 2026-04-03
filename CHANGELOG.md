@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] — 2026-04-03
+
+### Added
+- **Intent Detection:** SKILL.md routes natural language requests to the correct workflow without explicit `/banana` subcommands
+- **Fast-path generation:** Concrete requests generate immediately with smart defaults (domain mode, aspect ratio, resolution inferred from subject and keywords) — no multi-question interview
+- **Self-executable workflows:** All workflow files have conditional prerequisites (`if not already loaded`) so they work independently of SKILL.md routing
+- **Context-aware editing:** workflow-edit.md checks conversation context for the most recently generated image path
+
+### Changed
+- Core Principle biased toward action: "prefer generating with smart defaults and iterating" replaces "ask clarifying questions"
+- workflow-generate.md Step 1 split into fast-path (concrete subject → skip to prompt construction) and standard-path (vague → max 1-2 questions)
+- Domain mode inference covers all 9 modes (was 6, missing Editorial, Infographic; Cinema/Landscape were conflated)
+
+### Fixed
+- Dead reference in workflow-generate.md: "see Quick Reference in SKILL.md" → points to `prompt-engineering.md → BANNED PROMPT KEYWORDS`
+
 ## [2.0.0] — 2026-04-03
 
 ### Changed
@@ -147,6 +163,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Batch variations, multi-turn chat, prompt inspiration
 - Install script with validation
 
+[2.1.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.1.0
 [2.0.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.0.0
 [1.5.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v1.5.0
 [1.4.0]: https://github.com/AgriciDaniel/banana-claude/releases/tag/v1.4.0
