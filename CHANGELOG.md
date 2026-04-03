@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] — 2026-04-03
+
+### Changed
+- **Architecture:** Refactored SKILL.md from monolithic 371-line prompt to lean ~65-line router
+- **Progressive Disclosure:** Workflow logic extracted to 4 dedicated reference files (workflow-generate.md, workflow-edit.md, workflow-chat.md, workflow-batch.md)
+- **Token Efficiency:** SKILL.md body reduced from ~2,200+ words to ≤375 words (~70% reduction per invocation)
+- All 8 subcommands fully functional — no feature changes
+
 ## [1.5.0] - 2026-04-02
 
 ### Breaking Changes
