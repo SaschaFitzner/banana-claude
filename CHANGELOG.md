@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] — 2026-04-03
+
+### Changed
+- **Output directory:** Generated images are now saved to `./nanobanana_generated/` in the current working directory instead of `~/Documents/nanobanana_generated/`. This ensures Claude can access output files, especially in container environments.
+- Added `--output-dir` flag to `generate.py` and `edit.py` for custom output paths
+
 ## [2.1.0] — 2026-04-03
 
 ### Added
@@ -163,6 +169,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Batch variations, multi-turn chat, prompt inspiration
 - Install script with validation
 
+[2.2.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.2.0
 [2.1.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.1.0
 [2.0.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.0.0
 [1.5.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v1.5.0

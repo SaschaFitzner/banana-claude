@@ -3,7 +3,7 @@ name: banana
 description: "AI image generation using Google Gemini. Use for any request involving creating, editing, or iterating on images, photos, logos, banners, and illustrations. Handles text-to-image, image editing, multi-turn sessions, batch workflows, and brand presets. Triggers on: generate an image, create a photo, edit this picture, design a logo, make a banner, and all /banana commands."
 argument-hint: "[generate|edit|chat|inspire|batch|setup|preset|cost] <idea, path, or command>"
 metadata:
-  version: "2.1.0"
+  version: "2.2.0"
   author: "Sascha Fitzner — fitznerIO GmbH"
   original-author: AgriciDaniel
 ---
