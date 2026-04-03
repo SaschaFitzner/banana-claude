@@ -37,7 +37,11 @@ This repo follows the official Claude Code plugin layout:
 
 | File | Purpose |
 |---|---|
-| `skills/banana/SKILL.md` | Main orchestrator. Edit to change Claude's behavior. |
+| `skills/banana/SKILL.md` | Router — routes subcommands to workflow references. Edit to change routing logic. |
+| `skills/banana/references/workflow-generate.md` | Full 9-step generate pipeline: intent analysis, domain mode, prompt construction, aspect ratio, resolution, execution, post-processing, error recovery, cost logging. |
+| `skills/banana/references/workflow-edit.md` | Edit pipeline: intelligent instruction enhancement, edit.py syntax, safety handling. |
+| `skills/banana/references/workflow-chat.md` | Multi-turn session rules: context tracking, character consistency, session management. |
+| `skills/banana/references/workflow-batch.md` | Batch pipeline: variations strategy, CSV batch, cost estimation, sequential execution. |
 | `skills/banana/references/gemini-models.md` | Model roster, routing table, resolution defaults. Update when Google releases new models. |
 | `skills/banana/references/prompt-engineering.md` | The prompt construction system. Update when Google publishes new guidance. |
 | `skills/banana/scripts/generate.py` | Image generation via Gemini REST API. Uses urllib.request (stdlib). |
