@@ -4,7 +4,8 @@ description: "AI image generation using Google Gemini. Use for any request invol
 argument-hint: "[generate|edit|chat|inspire|batch|setup|preset|cost] <idea, path, or command>"
 metadata:
   version: "2.0.0"
-  author: AgriciDaniel
+  author: "Sascha Fitzner — fitznerIO GmbH"
+  original-author: AgriciDaniel
 ---
 
 # Banana Claude — Creative Director for AI Image Generation

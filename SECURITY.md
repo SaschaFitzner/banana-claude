@@ -13,7 +13,7 @@ If you discover a security vulnerability in Banana Claude, please report it resp
 
 **Do NOT open a public issue for security vulnerabilities.**
 
-Instead, please [open a security advisory](https://github.com/AgriciDaniel/banana-claude/security/advisories/new) on this repository.
+Instead, please [open a security advisory](https://github.com/SaschaFitzner/banana-claude/security/advisories/new) on this repository.
 
 Include:
 - Description of the vulnerability

@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "AI image generation Creative Director powered by Google Gemini Nano Banana models. Claude interprets intent, selects domain expertise, constructs optimized prompts, and orchestrates Gemini for best results.",
   "author": {
-    "name": "SaschaFitzner",
+    "name": "Sascha Fitzner — fitznerIO GmbH",
     "url": "https://github.com/SaschaFitzner"
   },
   "homepage": "https://github.com/SaschaFitzner/banana-claude",

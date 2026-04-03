@@ -15,7 +15,6 @@ Unlike simple API wrappers, Claude interprets your intent, selects domain expert
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Fork of](https://img.shields.io/badge/fork%20of-AgriciDaniel%2Fbanana--claude-green)](https://github.com/AgriciDaniel/banana-claude)
 
-> **Blog:** [See banana-claude in action](https://agricidaniel.com/blog/banana-claude-ai-image-generation)
 
 <details>
 <summary>Table of Contents</summary>
@@ -190,13 +189,17 @@ banana-claude/                         # Claude Code Plugin
 │   ├── plugin.json                    # Plugin manifest
 │   └── marketplace.json               # Marketplace catalog
 ├── skills/banana/                     # Main skill
-│   ├── SKILL.md                       # Creative Director orchestration (v1.4)
+│   ├── SKILL.md                       # Router — routes subcommands to workflow references
 │   ├── references/
+│   │   ├── workflow-generate.md       # Full 9-step generate pipeline
+│   │   ├── workflow-edit.md           # Edit pipeline with intelligent transformations
+│   │   ├── workflow-chat.md           # Multi-turn session rules and context tracking
+│   │   ├── workflow-batch.md          # Batch pipeline with variations strategy
 │   │   ├── prompt-engineering.md      # 5-component formula, banned keywords, safety rephrase
 │   │   ├── gemini-models.md           # Model specs, rate limits, capabilities
-│   │   ├── post-processing.md        # ImageMagick/FFmpeg pipelines, green screen
-│   │   ├── cost-tracking.md          # Pricing table, usage guide
-│   │   └── presets.md                # Brand preset schema and examples
+│   │   ├── post-processing.md         # ImageMagick/FFmpeg pipelines, green screen
+│   │   ├── cost-tracking.md           # Pricing table, usage guide
+│   │   └── presets.md                 # Brand preset schema and examples
 │   └── scripts/
 │       ├── generate.py               # Image generation via Gemini REST API
 │       ├── edit.py                   # Image editing via Gemini REST API
@@ -249,4 +252,5 @@ See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
 
 ---
 
-Originally built for Claude Code by [@AgriciDaniel](https://github.com/AgriciDaniel) -- fork maintained by [@SaschaFitzner](https://github.com/SaschaFitzner)
+Maintained by [Sascha Fitzner](https://github.com/SaschaFitzner) — [fitznerIO GmbH](https://fitzner.io)
+Original concept and Creative Director architecture by [@AgriciDaniel](https://github.com/AgriciDaniel)

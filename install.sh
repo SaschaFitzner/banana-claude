@@ -1,7 +1,7 @@
 #!/bin/bash
 # Banana Claude -- Install Script
 # Standalone installer -- copies skill to ~/.claude/skills/ for Claude Code.
-# For plugin installation, use: /plugin marketplace add AgriciDaniel/banana-claude
+# For plugin installation, use: /plugin marketplace add SaschaFitzner/banana-claude
 #
 # Usage:
 #   ./install.sh                    # Install skill
