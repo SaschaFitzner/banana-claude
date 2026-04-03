@@ -21,11 +21,11 @@ from datetime import datetime
 from pathlib import Path
 
 DEFAULT_MODEL = "gemini-3.1-flash-image-preview"
-OUTPUT_DIR = Path.home() / "Documents" / "nanobanana_generated"
+OUTPUT_DIR_NAME = "nanobanana_generated"
 API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 
 
-def edit_image(image_path, prompt, model, api_key):
+def edit_image(image_path, prompt, model, api_key, output_dir=None):
     """Call Gemini API to edit an image."""
     image_path = Path(image_path).resolve()
     if not image_path.exists():
@@ -117,10 +117,11 @@ def edit_image(image_path, prompt, model, api_key):
         sys.exit(1)
 
     # Save image
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    save_dir = Path(output_dir) if output_dir else Path.cwd() / OUTPUT_DIR_NAME
+    save_dir.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
     filename = f"banana_edit_{timestamp}.png"
-    output_path = (OUTPUT_DIR / filename).resolve()
+    output_path = (save_dir / filename).resolve()
 
     with open(output_path, "wb") as f:
         f.write(base64.b64decode(image_data))
@@ -139,6 +140,7 @@ def main():
     parser.add_argument("--prompt", required=True, help="Edit instruction")
     parser.add_argument("--model", default=DEFAULT_MODEL, help=f"Model ID (default: {DEFAULT_MODEL})")
     parser.add_argument("--api-key", default=None, help="Google AI API key (or set GOOGLE_AI_API_KEY env)")
+    parser.add_argument("--output-dir", default=None, help="Output directory for edited images (default: ./<nanobanana_generated> in CWD)")
 
     args = parser.parse_args()
 
@@ -161,6 +163,7 @@ def main():
         prompt=args.prompt,
         model=args.model,
         api_key=api_key,
+        output_dir=args.output_dir,
     )
     print(json.dumps(result, indent=2))
 

@@ -114,12 +114,12 @@ magick input.png \( +clone -alpha extract -draw \
 
 ```bash
 # Resize all PNGs in directory
-for f in ~/Documents/nanobanana_generated/*.png; do
+for f in nanobanana_generated/*.png; do
   magick "$f" -resize 800x800 "${f%.png}_thumb.png"
 done
 
 # Convert all to WebP
-for f in ~/Documents/nanobanana_generated/*.png; do
+for f in nanobanana_generated/*.png; do
   magick "$f" -quality 85 "${f%.png}.webp"
 done
 ```

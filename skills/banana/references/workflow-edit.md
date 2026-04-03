@@ -45,13 +45,14 @@ python3 ${CLAUDE_SKILL_DIR}/scripts/edit.py \
 | `--image` | Yes | — |
 | `--prompt` | Yes | — |
 | `--model` | No | `gemini-3.1-flash-image-preview` |
+| `--output-dir` | No | `./nanobanana_generated` (CWD) |
 | `--api-key` | No | `$GOOGLE_AI_API_KEY` env |
 
 Note: `edit.py` does not support `--resolution` — output resolution matches the source image.
 
 **JSON output on success:**
 ```json
-{"path": "~/Documents/nanobanana_generated/banana_TIMESTAMP.png", "model": "...", "text": "..."}
+{"path": "./nanobanana_generated/banana_TIMESTAMP.png", "model": "...", "text": "..."}
 ```
 On error: `{"error": true, "message": "..."}` with non-zero exit code.
 

@@ -122,11 +122,12 @@ python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py \
 | `--model` | No | `gemini-3.1-flash-image-preview` |
 | `--thinking` | No | none |
 | `--image-only` | No | false |
+| `--output-dir` | No | `./nanobanana_generated` (CWD) |
 | `--api-key` | No | `$GOOGLE_AI_API_KEY` env |
 
 **JSON output on success:**
 ```json
-{"path": "~/Documents/nanobanana_generated/banana_TIMESTAMP.png", "model": "...", "aspect_ratio": "...", "resolution": "...", "text": "..."}
+{"path": "./nanobanana_generated/banana_TIMESTAMP.png", "model": "...", "aspect_ratio": "...", "resolution": "...", "text": "..."}
 ```
 On error: `{"error": true, "message": "..."}` with non-zero exit code.
 
