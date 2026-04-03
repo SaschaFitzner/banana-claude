@@ -106,7 +106,7 @@ claude
 /banana inspire
 ```
 
-Claude will ask about your brand, select the right domain mode (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract), construct a detailed prompt with lighting and composition, set the right aspect ratio, and generate.
+Claude automatically detects your intent -- no `/banana` command needed. Just say "create a hero image for my coffee shop" and Claude selects the right domain mode, constructs a detailed prompt with lighting and composition, picks the aspect ratio, and generates. For clear requests, it uses smart defaults and generates immediately. For vague ones, it asks 1-2 targeted questions first.
 
 ![Banana Claude in action](screenshots/banana-claude-skillcommand.gif)
 
@@ -130,6 +130,8 @@ Claude will ask about your brand, select the right domain mode (Cinema, Product,
 
 ## What Makes This Different
 
+- **Works Autonomously** -- No `/banana` command required. Claude detects image creation intent from natural language and routes to the right workflow automatically
+- **Smart Defaults** -- Concrete requests generate immediately via fast-path (domain mode, aspect ratio, resolution inferred from subject and keywords). Vague requests get at most 1-2 targeted questions
 - **Intent Analysis** -- Understands *what you actually need* (blog header? app icon? product shot?)
 - **Domain Expertise** -- Selects the right creative lens (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract)
 - **5-Component Prompt Formula** -- Constructs prompts with Subject + Action + Location/Context + Composition + Style (includes lighting)
@@ -183,13 +185,15 @@ Instead of sending "a cat in space" to Gemini, Claude constructs:
 
 ## Architecture
 
+The skill uses **progressive disclosure**: SKILL.md is a lean router (~57 lines) that loads workflow-specific references on demand. This keeps token usage low per invocation while supporting the full Creative Director pipeline. Since v2.1, SKILL.md includes intent detection so Claude can route natural language requests without explicit `/banana` commands.
+
 ```
 banana-claude/                         # Claude Code Plugin
 ├── .claude-plugin/
 │   ├── plugin.json                    # Plugin manifest
 │   └── marketplace.json               # Marketplace catalog
 ├── skills/banana/                     # Main skill
-│   ├── SKILL.md                       # Router — routes subcommands to workflow references
+│   ├── SKILL.md                       # Router — routes commands and natural language intent to workflows
 │   ├── references/
 │   │   ├── workflow-generate.md       # Full 9-step generate pipeline
 │   │   ├── workflow-edit.md           # Edit pipeline with intelligent transformations
@@ -245,6 +249,8 @@ This fork differs from the [original](https://github.com/AgriciDaniel/banana-cla
 
 - **No MCP dependency** -- Removed `@ycse/nanobanana-mcp`. All image generation uses direct Gemini REST API calls via Python scripts (`generate.py`, `edit.py`).
 - **No Node.js required** -- Only Python 3.6+ (stdlib only, zero pip dependencies).
+- **Progressive disclosure architecture** -- SKILL.md refactored from 371-line monolith to ~57-line router with on-demand workflow references (~70% token reduction per invocation).
+- **Autonomous intent detection** -- Claude uses the skill via natural language without explicit `/banana` commands, with fast-path smart defaults for immediate generation.
 - **More features** -- Scripts support extended thinking (`--thinking`), resolution control (`--resolution`), and image-only mode (`--image-only`) directly.
 - **Lower cost** -- Stateless API calls use ~3x fewer input tokens than MCP chat sessions for iterative edits.
 
