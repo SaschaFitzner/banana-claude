@@ -1,4 +1,4 @@
-<!-- Updated: 2026-04-03 -->
+<!-- Updated: 2026-04-04 -->
 
 > **Rewrite based on [AgriciDaniel/banana-claude](https://github.com/AgriciDaniel/banana-claude)** -- original concept and Creative Director idea by [@AgriciDaniel](https://github.com/AgriciDaniel). This version is a ground-up rewrite: MCP dependency removed, architecture redesigned as progressive-disclosure router, autonomous intent detection added, and all scripts rewritten as zero-dependency Python.
 
@@ -11,7 +11,7 @@ AI image generation skill for Claude Code where **Claude acts as Creative Direct
 Unlike simple API wrappers, Claude interprets your intent, selects domain expertise, constructs optimized prompts using Google's official 5-component formula, and orchestrates Gemini for the best possible results.
 
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
-[![Version](https://img.shields.io/badge/version-2.2.0-coral)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.3.0-coral)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Fork of](https://img.shields.io/badge/fork%20of-AgriciDaniel%2Fbanana--claude-green)](https://github.com/AgriciDaniel/banana-claude)
 
@@ -99,6 +99,9 @@ claude
 # Edit an existing image
 /banana edit ~/photo.png "remove the background"
 
+# Style transfer with a reference image
+/banana edit ~/photo.png "apply the color grading from the reference" --reference ~/style-ref.png
+
 # Multi-turn creative session
 /banana chat
 
@@ -116,7 +119,7 @@ Claude automatically detects your intent -- no `/banana` command needed. Just sa
 |---------|-------------|
 | `/banana` | Interactive -- Claude detects intent and guides you |
 | `/banana generate <idea>` | Full Creative Director pipeline |
-| `/banana edit <path> <instructions>` | Intelligent image editing |
+| `/banana edit <path> <instructions>` | Intelligent image editing (supports reference images for style transfer) |
 | `/banana chat` | Multi-turn visual session (maintains consistency) |
 | `/banana inspire [category]` | Browse 2,500+ prompt database |
 | `/banana batch <idea> [N]` | Generate N variations (default: 3) |
@@ -139,6 +142,7 @@ Claude automatically detects your intent -- no `/banana` command needed. Just sa
 - **Post-Processing** -- Crops, removes backgrounds, converts formats, resizes for platforms
 - **Batch Variations** -- Generates N variations rotating different components
 - **Session Consistency** -- Maintains character/style across multi-turn conversations
+- **Multi-Image Editing** -- Style transfer, color matching, and character consistency using up to 14 reference images
 - **4K Resolution Output** -- Up to 4096×4096 with `imageSize` control
 - **14 Aspect Ratios** -- Including ultra-wide 21:9 for cinematic compositions
 

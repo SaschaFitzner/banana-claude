@@ -6,6 +6,7 @@ Uses only Python stdlib (no pip dependencies).
 
 Usage:
     edit.py --image path/to/image.png --prompt "remove the background"
+            [--reference ref1.png --reference ref2.png]
             [--model MODEL] [--api-key KEY]
 """
 
@@ -25,34 +26,42 @@ OUTPUT_DIR_NAME = "nanobanana_generated"
 API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 
 
-def edit_image(image_path, prompt, model, api_key, output_dir=None):
-    """Call Gemini API to edit an image."""
-    image_path = Path(image_path).resolve()
-    if not image_path.exists():
-        print(json.dumps({"error": True, "message": f"Image not found: {image_path}"}))
+def encode_image(path):
+    """Read an image file and return (base64_data, mime_type)."""
+    path = Path(path).resolve()
+    if not path.exists():
+        print(json.dumps({"error": True, "message": f"Image not found: {path}"}))
         sys.exit(1)
-
-    # Read and encode image
-    with open(image_path, "rb") as f:
-        image_b64 = base64.b64encode(f.read()).decode("utf-8")
-
-    # Determine MIME type
-    suffix = image_path.suffix.lower()
+    with open(path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode("utf-8")
+    suffix = path.suffix.lower()
     mime_types = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
                   ".webp": "image/webp", ".gif": "image/gif"}
-    mime_type = mime_types.get(suffix, "image/png")
+    return b64, mime_types.get(suffix, "image/png")
+
+
+def edit_image(image_path, prompt, model, api_key, output_dir=None, reference_images=None):
+    """Call Gemini API to edit an image, optionally with reference images."""
+    image_path = Path(image_path).resolve()
+
+    # Build request parts: primary image first (highest weight), then references, then prompt
+    request_parts = []
+
+    img_b64, img_mime = encode_image(image_path)
+    request_parts.append({"inlineData": {"mimeType": img_mime, "data": img_b64}})
+
+    ref_paths = []
+    for ref in (reference_images or []):
+        ref_b64, ref_mime = encode_image(ref)
+        request_parts.append({"inlineData": {"mimeType": ref_mime, "data": ref_b64}})
+        ref_paths.append(str(Path(ref).resolve()))
+
+    request_parts.append({"text": prompt})
 
     url = f"{API_BASE}/{model}:generateContent?key={api_key}"
 
     body = {
-        "contents": [
-            {
-                "parts": [
-                    {"text": prompt},
-                    {"inlineData": {"mimeType": mime_type, "data": image_b64}},
-                ]
-            }
-        ],
+        "contents": [{"parts": request_parts}],
         "generationConfig": {
             "responseModalities": ["TEXT", "IMAGE"],
         },
@@ -126,23 +135,31 @@ def edit_image(image_path, prompt, model, api_key, output_dir=None):
     with open(output_path, "wb") as f:
         f.write(base64.b64decode(image_data))
 
-    return {
+    result = {
         "path": str(output_path),
         "model": model,
         "source": str(image_path),
         "text": text_response,
     }
+    if ref_paths:
+        result["references"] = ref_paths
+    return result
 
 
 def main():
     parser = argparse.ArgumentParser(description="Edit images via Gemini REST API")
-    parser.add_argument("--image", required=True, help="Path to input image")
+    parser.add_argument("--image", required=True, help="Path to input image (primary, highest weight)")
+    parser.add_argument("--reference", action="append", default=[], help="Reference image(s) for style/context (repeatable, max 13)")
     parser.add_argument("--prompt", required=True, help="Edit instruction")
     parser.add_argument("--model", default=DEFAULT_MODEL, help=f"Model ID (default: {DEFAULT_MODEL})")
     parser.add_argument("--api-key", default=None, help="Google AI API key (or set GOOGLE_AI_API_KEY env)")
     parser.add_argument("--output-dir", default=None, help="Output directory for edited images (default: ./<nanobanana_generated> in CWD)")
 
     args = parser.parse_args()
+
+    if len(args.reference) > 13:
+        print(json.dumps({"error": True, "message": "Max 13 reference images (14 total including primary). Got: " + str(len(args.reference))}))
+        sys.exit(1)
 
     api_key = args.api_key or os.environ.get("GOOGLE_AI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     if not api_key:
@@ -164,6 +181,7 @@ def main():
         model=args.model,
         api_key=api_key,
         output_dir=args.output_dir,
+        reference_images=args.reference,
     )
     print(json.dumps(result, indent=2))
 

@@ -3,7 +3,7 @@ name: banana
 description: "AI image generation using Google Gemini. Use for any request involving creating, editing, or iterating on images, photos, logos, banners, and illustrations. Handles text-to-image, image editing, multi-turn sessions, batch workflows, and brand presets. Triggers on: generate an image, create a photo, edit this picture, design a logo, make a banner, and all /banana commands."
 argument-hint: "[generate|edit|chat|inspire|batch|setup|preset|cost] <idea, path, or command>"
 metadata:
-  version: "2.2.0"
+  version: "2.3.0"
   author: "Sascha Fitzner — fitznerIO GmbH"
   original-author: AgriciDaniel
 ---
@@ -25,7 +25,7 @@ Act as a **Creative Director**. NEVER pass raw user text to the API. Interpret i
 | Argument | Action |
 |---|---|
 | `generate <idea>` | Read `references/workflow-generate.md` → full pipeline → generate.py |
-| `edit <path> <instr>` | Read `references/workflow-edit.md` → enhance instruction → edit.py |
+| `edit <path> <instr> [--reference path ...]` | Read `references/workflow-edit.md` → enhance instruction → edit.py (supports up to 13 reference images via `--reference`) |
 | `chat` | Read `references/workflow-chat.md` → multi-turn session with context tracking |
 | `batch <idea> [N]` | Read `references/workflow-batch.md` → N variations or CSV-driven batch (requires cost confirmation) |
 | `inspire [category]` | Read `references/prompt-engineering.md` → generate ideas from domain libraries; adapt Midjourney/DALL-E prompts to Gemini format (see Prompt Adaptation Rules) |
@@ -41,6 +41,7 @@ When triggered without an explicit subcommand, classify intent using these signa
 | Signal | Route to |
 |--------|----------|
 | User provides an image path or references an existing image | `workflow-edit.md` |
+| User provides multiple image paths with edit/style instructions (e.g., "make A look like B", "apply the style of B to A") | `workflow-edit.md` (with `--reference`) |
 | User requests "variations", "alternatives", or N versions | `workflow-batch.md` |
 | User says "iterate", "refine", "keep going", or "chat mode" | `workflow-chat.md` |
 | Any other image creation request | `workflow-generate.md` |

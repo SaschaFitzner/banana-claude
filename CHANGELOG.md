@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] — 2026-04-04
+
+### Added
+- **Multi-image editing:** `edit.py` now supports `--reference` flag (repeatable) for up to 13 reference images alongside the primary image. Enables style transfer, color matching, element composition, character consistency, and brand alignment workflows.
+- Multi-image edit use case documentation in `workflow-edit.md`
+- Intent detection signal for multi-image edit requests ("make A look like B") in SKILL.md
+
+### Changed
+- `edit.py` refactored: extracted `encode_image()` helper to avoid code duplication when encoding primary + reference images
+- Edit pipeline expanded from 6 to 7 steps (new step 2: "Collect references")
+- JSON output includes `"references"` array when reference images are used
+
 ## [2.2.0] — 2026-04-03
 
 ### Changed
@@ -169,6 +181,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Batch variations, multi-turn chat, prompt inspiration
 - Install script with validation
 
+[2.3.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.3.0
 [2.2.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.2.0
 [2.1.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.1.0
 [2.0.0]: https://github.com/SaschaFitzner/banana-claude/releases/tag/v2.0.0
