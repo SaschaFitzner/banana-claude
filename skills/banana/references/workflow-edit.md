@@ -25,6 +25,8 @@ ALWAYS enhance the user's instruction before passing to the API:
 | "add text" | Font style, size, placement, contrast, readability notes with exact text in quotes |
 | "make it pop" | Increase saturation, add contrast, enhance focal point — describe the specific visual outcome |
 | "extend it" | Outpainting with style-consistent continuation description matching existing lighting and color grade |
+| "make it look like this" (+ reference) | "Apply the visual style, lighting, and color palette from the reference image while preserving the subject and composition of the primary image" |
+| "use the colors from this" (+ reference) | "Match the color grading, tonal range, and white balance from the reference image, preserving all subject detail and composition" |
 
 See `references/prompt-engineering.md` → Positive Framing for rephrasing exclusions as affirmations.
 

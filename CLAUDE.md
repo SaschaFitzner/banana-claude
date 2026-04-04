@@ -30,8 +30,9 @@ This repo follows the official Claude Code plugin layout:
 3. Test basic generation: `/banana generate "a red apple on a white table"`
 4. Test domain routing: `/banana generate "product shot for headphones"`
 5. Test editing: `/banana edit [path] "make the background blurry"`
-6. Verify output image files exist at the logged path
-7. Check cost log if cost_tracker.py is active
+6. Test edit with reference: `/banana edit [path] "apply the style from the reference" --reference [ref-path]`
+7. Verify output image files exist at the logged path
+8. Check cost log if cost_tracker.py is active
 
 ## File responsibilities
 
@@ -45,7 +46,7 @@ This repo follows the official Claude Code plugin layout:
 | `skills/banana/references/gemini-models.md` | Model roster, routing table, resolution defaults. Update when Google releases new models. |
 | `skills/banana/references/prompt-engineering.md` | The prompt construction system. Update when Google publishes new guidance. |
 | `skills/banana/scripts/generate.py` | Image generation via Gemini REST API. Uses urllib.request (stdlib). |
-| `skills/banana/scripts/edit.py` | Image editing via Gemini REST API. Uses urllib.request (stdlib). |
+| `skills/banana/scripts/edit.py` | Image editing via Gemini REST API. Supports `--reference` for multi-image editing (style transfer, etc.). Uses urllib.request (stdlib). |
 | `agents/brief-constructor.md` | Subagent for prompt construction. |
 
 ## Scripts use stdlib only
