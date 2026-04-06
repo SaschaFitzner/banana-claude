@@ -23,7 +23,7 @@ After each generation or edit, maintain in the active conversation context (work
 Enrich every edit prompt with accumulated context:
 - Reference "the same character" + repeat 2-3 key identifiers from the first generation
 - Repeat the original style anchors in each edit instruction to prevent drift
-- See `references/prompt-engineering.md` → Character Consistency (Multi-turn) for the technique of prepending the previous output image to the next edit call to reinforce visual continuity
+- See `references/prompt-core.md` → Character Consistency (Multi-turn) for the technique of prepending the previous output image to the next edit call to reinforce visual continuity
 
 **Character drift warning:** After 4+ consecutive edit turns, if character consistency breaks down, consider re-generating from text-to-image using the accumulated style anchors as the new base brief.
 

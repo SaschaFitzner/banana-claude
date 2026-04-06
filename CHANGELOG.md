@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] — 2026-04-06
+
+### Added
+- **Website Design mode:** New domain mode for generating full-page website screenshots (landing pages, homepages, dashboards). Includes framing rule (no browser chrome), design thinking directions, modifier library with 7 categories, and 6 prompt templates. Default: 9:16 portrait, 1K resolution.
+- Disambiguation note in workflow-generate.md clarifying Website Design vs. UI/Web mode
+
+### Changed
+- **Prompt engineering split:** `prompt-engineering.md` (482 lines) refactored into `prompt-core.md` (~200 lines, shared methodology) + 10 individual mode files under `references/modes/` (loaded on-demand). Per generation, only core + 1 mode file is loaded instead of the full monolith.
+- CI validation expanded to check all mode files and workflow files
+- brief-constructor agent updated to reference new file structure
+
 ## [2.3.0] — 2026-04-04
 
 ### Added

@@ -35,7 +35,21 @@ jobs:
             skills/banana/SKILL.md
             skills/banana/references/gemini-models.md
             skills/banana/references/post-processing.md
-            skills/banana/references/prompt-engineering.md
+            skills/banana/references/prompt-core.md
+            skills/banana/references/workflow-generate.md
+            skills/banana/references/workflow-edit.md
+            skills/banana/references/workflow-chat.md
+            skills/banana/references/workflow-batch.md
+            skills/banana/references/modes/cinema.md
+            skills/banana/references/modes/product.md
+            skills/banana/references/modes/portrait.md
+            skills/banana/references/modes/editorial.md
+            skills/banana/references/modes/ui-web.md
+            skills/banana/references/modes/logo.md
+            skills/banana/references/modes/landscape.md
+            skills/banana/references/modes/abstract.md
+            skills/banana/references/modes/infographic.md
+            skills/banana/references/modes/website-design.md
             skills/banana/references/cost-tracking.md
             skills/banana/references/presets.md
             skills/banana/scripts/generate.py

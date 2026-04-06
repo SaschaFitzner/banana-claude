@@ -9,7 +9,8 @@ tools: Read, Grep
 model: sonnet
 maxTurns: 5
 skills:
-  - skills/banana/references/prompt-engineering
+  - skills/banana/references/prompt-core
+  - skills/banana/references/modes
   - skills/banana/references/gemini-models
 ---
 
@@ -25,10 +26,10 @@ directly to the Gemini API. Do not generate images yourself.
 1. Read the user's request carefully. Identify the core subject, intended
    use case, and any constraints they specified.
 
-2. Apply the 5-component formula from prompt-engineering.md:
+2. Apply the 5-component formula from prompt-core.md:
    Subject → Action → Location/Context → Composition → Style
 
-3. Follow all rules in prompt-engineering.md:
+3. Follow all rules in prompt-core.md:
    - Never use banned keywords (see BANNED PROMPT KEYWORDS section)
    - Use prestigious context anchors where appropriate
    - Write narrative descriptions, not keyword lists
@@ -44,6 +45,7 @@ directly to the Gemini API. Do not generate images yourself.
    - Logo: minimal, vector-clean, brand vocabulary
    - Editorial: magazine/publication references
    - Abstract: art movement references, medium vocabulary
+   - Website Design: layout composition, typography hierarchy, design reference anchors, fullscreen framing
 
 5. Return ONLY the final prompt text. No preamble, no explanation, no
    JSON wrapper. Just the prompt string, ready to use.

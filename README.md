@@ -11,7 +11,7 @@ AI image generation skill for Claude Code where **Claude acts as Creative Direct
 Unlike simple API wrappers, Claude interprets your intent, selects domain expertise, constructs optimized prompts using Google's official 5-component formula, and orchestrates Gemini for the best possible results.
 
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
-[![Version](https://img.shields.io/badge/version-2.3.0-coral)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.4.0-coral)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Fork of](https://img.shields.io/badge/fork%20of-AgriciDaniel%2Fbanana--claude-green)](https://github.com/AgriciDaniel/banana-claude)
 
@@ -203,7 +203,10 @@ banana-claude/                         # Claude Code Plugin
 │   │   ├── workflow-edit.md           # Edit pipeline with intelligent transformations
 │   │   ├── workflow-chat.md           # Multi-turn session rules and context tracking
 │   │   ├── workflow-batch.md          # Batch pipeline with variations strategy
-│   │   ├── prompt-engineering.md      # 5-component formula, banned keywords, safety rephrase
+│   │   ├── prompt-core.md             # 5-component formula, banned keywords, safety rephrase
+│   │   ├── modes/                     # Domain mode libraries (loaded on-demand per generation)
+│   │   │   ├── cinema.md, product.md, portrait.md, editorial.md, ...
+│   │   │   └── website-design.md      # NEW — full-page website screenshots
 │   │   ├── gemini-models.md           # Model specs, rate limits, capabilities
 │   │   ├── post-processing.md         # ImageMagick/FFmpeg pipelines, green screen
 │   │   ├── cost-tracking.md           # Pricing table, usage guide
