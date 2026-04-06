@@ -3,7 +3,7 @@ name: banana
 description: "AI image generation using Google Gemini. Use for any request involving creating, editing, or iterating on images, photos, logos, banners, and illustrations. Handles text-to-image, image editing, multi-turn sessions, batch workflows, and brand presets. Triggers on: generate an image, create a photo, edit this picture, design a logo, make a banner, and all /banana commands."
 argument-hint: "[generate|edit|chat|inspire|batch|setup|preset|cost] <idea, path, or command>"
 metadata:
-  version: "2.3.0"
+  version: "2.4.0"
   author: "Sascha Fitzner — fitznerIO GmbH"
   original-author: AgriciDaniel
 ---
@@ -14,7 +14,7 @@ metadata:
 
 Read BOTH before building any prompt or calling generate.py / edit.py:
 1. `references/gemini-models.md` — model selection, parameters, rate limits
-2. `references/prompt-engineering.md` — 5-Component Formula, banned keywords, templates
+2. `references/prompt-core.md` — 5-Component Formula, banned keywords, templates
 
 ## Core Principle
 
@@ -28,7 +28,7 @@ Act as a **Creative Director**. NEVER pass raw user text to the API. Interpret i
 | `edit <path> <instr> [--reference path ...]` | Read `references/workflow-edit.md` → enhance instruction → edit.py (supports up to 13 reference images via `--reference`) |
 | `chat` | Read `references/workflow-chat.md` → multi-turn session with context tracking |
 | `batch <idea> [N]` | Read `references/workflow-batch.md` → N variations or CSV-driven batch (requires cost confirmation) |
-| `inspire [category]` | Read `references/prompt-engineering.md` → generate ideas from domain libraries; adapt Midjourney/DALL-E prompts to Gemini format (see Prompt Adaptation Rules) |
+| `inspire [category]` | Read `references/prompt-core.md` + matching `references/modes/` file → generate ideas from domain libraries; adapt Midjourney/DALL-E prompts to Gemini format (see Prompt Adaptation Rules) |
 | `preset [sub]` | Read `references/presets.md` → `python3 ${CLAUDE_SKILL_DIR}/scripts/presets.py [list\|create\|show\|delete]` |
 | `cost [sub]` | Read `references/cost-tracking.md` → `python3 ${CLAUDE_SKILL_DIR}/scripts/cost_tracker.py [log\|summary\|today\|estimate]` |
 | `setup` | Verify Python 3.6+ and `GOOGLE_AI_API_KEY` env var. Free key: https://aistudio.google.com/apikey. Test: `python3 ${CLAUDE_SKILL_DIR}/scripts/generate.py --prompt "test" --resolution 512` |
@@ -52,7 +52,7 @@ When triggered without an explicit subcommand, classify intent using these signa
 
 | `finishReason` / Error | Action |
 |---|---|
-| `IMAGE_SAFETY` | Rephrase using Safety Rephrase strategies in `references/prompt-engineering.md`. NEVER auto-retry without user approval. |
+| `IMAGE_SAFETY` | Rephrase using Safety Rephrase strategies in `references/prompt-core.md`. NEVER auto-retry without user approval. |
 | `PROHIBITED_CONTENT` | Topic blocked by Google. Non-retryable — explain why, suggest alternatives. |
 | HTTP 400 `FAILED_PRECONDITION` | Billing not enabled. User must enable at https://aistudio.google.com/apikey |
 

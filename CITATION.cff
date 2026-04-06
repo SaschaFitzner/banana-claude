@@ -15,8 +15,8 @@ authors:
 repository-code: "https://github.com/SaschaFitzner/banana-claude"
 url: "https://github.com/SaschaFitzner/banana-claude"
 license: MIT
-version: "2.3.0"
-date-released: "2026-04-04"
+version: "2.4.0"
+date-released: "2026-04-06"
 keywords:
   - ai-image-generation
   - claude-code

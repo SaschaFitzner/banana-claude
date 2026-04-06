@@ -44,7 +44,7 @@ This repo follows the official Claude Code plugin layout:
 | `skills/banana/references/workflow-chat.md` | Multi-turn session rules: context tracking, character consistency, session management. |
 | `skills/banana/references/workflow-batch.md` | Batch pipeline: variations strategy, CSV batch, cost estimation, sequential execution. |
 | `skills/banana/references/gemini-models.md` | Model roster, routing table, resolution defaults. Update when Google releases new models. |
-| `skills/banana/references/prompt-engineering.md` | The prompt construction system. Update when Google publishes new guidance. |
+| `skills/banana/references/prompt-core.md` | Core prompt construction system (5-component formula, banned keywords, safety). Mode-specific libraries in `references/modes/`. |
 | `skills/banana/scripts/generate.py` | Image generation via Gemini REST API. Uses urllib.request (stdlib). |
 | `skills/banana/scripts/edit.py` | Image editing via Gemini REST API. Supports `--reference` for multi-image editing (style transfer, etc.). Uses urllib.request (stdlib). |
 | `agents/brief-constructor.md` | Subagent for prompt construction. |
@@ -62,7 +62,7 @@ ensures the skill works on any system with Python 3.6+.
 - Gemini generates ONE image per API call. There is no batch parameter.
 - No negative prompt parameter exists. Use semantic reframing in the prompt.
 - `responseModalities` must explicitly include "IMAGE" or the API returns text only.
-- NEVER use banned keywords in prompts: "8K", "masterpiece", "ultra-realistic", "high resolution" -- these degrade output quality. Use prestigious context anchors instead (see prompt-engineering.md).
+- NEVER use banned keywords in prompts: "8K", "masterpiece", "ultra-realistic", "high resolution" -- these degrade output quality. Use prestigious context anchors instead (see prompt-core.md).
 
 ## Distribution
 

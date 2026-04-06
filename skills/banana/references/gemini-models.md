@@ -60,6 +60,7 @@ with a hard error. Do not use. The replacement is Nano Banana 2
 | UI, Infographic | Nano Banana 2 | Search grounding for factual diagrams |
 | Logo | Nano Banana 2 | Text rendering improvements in 3.1 |
 | Editorial | Nano Banana 2 | Default |
+| Website Design | Nano Banana 2 | Text rendering and layout detail benefit from 3.1 |
 | Free tier / budget | Nano Banana (original) | $0.039/image, still excellent |
 
 ## Resolution Defaults by Domain
@@ -69,6 +70,7 @@ with a hard error. Do not use. The replacement is Nano Banana 2
 | Portrait, Product, Logo | `2K` | Fine detail and text fidelity |
 | Cinema, Landscape | `2K` + widescreen ratio | Atmospheric depth at larger canvas |
 | UI, Infographic | `1K` | Structured output doesn't benefit from 4K |
+| Website Design | `1K` | Cost-effective iteration default; use 2K for quality, 4K for presentation |
 | Quick draft / preview | `512` (Nano Banana 2 only) | Rapid iteration |
 | Print / high fidelity | `4K` | Maximum resolution for physical output |
 

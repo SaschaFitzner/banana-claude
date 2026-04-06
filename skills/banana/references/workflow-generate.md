@@ -1,6 +1,6 @@
 # Workflow: Generate
 
-> **Prerequisites:** If not already loaded, read `references/gemini-models.md` and `references/prompt-engineering.md` before Step 4.
+> **Prerequisites:** If not already loaded, read `references/gemini-models.md` and `references/prompt-core.md` before Step 4. After Step 3, load the matching mode file from `references/modes/`.
 
 ---
 
@@ -8,9 +8,9 @@
 
 **Fast-path** (concrete subject, no brand context — skip to Step 4):
 Infer smart defaults and proceed directly to prompt construction.
-- Domain mode from subject: person/character → Portrait, product/packshot → Product, dramatic scene/story → Cinema, environment/nature → Landscape, fashion/lifestyle → Editorial, icon/UI element → UI/Web, brand mark → Logo, pattern/texture → Abstract, data/diagram → Infographic
-- Aspect ratio: `1:1` default. Infer from keywords: banner/header → `16:9`, story/reel → `9:16`, poster/pin → `2:3`, print/photo → `3:2`, product shot → `4:3`
-- Resolution: `2K`, Model: `gemini-3.1-flash-image-preview`
+- Domain mode from subject: person/character → Portrait, product/packshot → Product, dramatic scene/story → Cinema, environment/nature → Landscape, fashion/lifestyle → Editorial, icon/UI element → UI/Web, brand mark → Logo, pattern/texture → Abstract, data/diagram → Infographic, website/landing page/homepage/dashboard/web design/mockup/wireframe/page layout → Website Design
+- Aspect ratio: `1:1` default. Infer from keywords: banner/header → `16:9`, story/reel → `9:16`, poster/pin → `2:3`, print/photo → `3:2`, product shot → `4:3`, landing page/website/homepage/dashboard/web design → `9:16`
+- Resolution: `2K` (except Website Design, UI/Web, Infographic → `1K`), Model: `gemini-3.1-flash-image-preview`
 
 **Standard-path** (vague or abstract subject):
 Ask at most 1-2 targeted questions to clarify the output type or use case, then proceed.
@@ -46,12 +46,19 @@ Choose the expertise lens that best fits the request:
 | **Landscape** | Environments, backgrounds, wallpapers | Atmospheric perspective, depth layers, time of day |
 | **Abstract** | Patterns, textures, generative art | Color theory, mathematical forms, movement |
 | **Infographic** | Data visualization, diagrams, charts | Layout structure, text rendering, hierarchy |
+| **Website Design** | Landing pages, homepages, dashboards, web mockups, page concepts | Layout composition, typography hierarchy, color system, design anchors, content density, fullscreen framing (no browser chrome) |
+
+**Website Design vs. UI/Web:** UI/Web mode creates individual components
+(icons, illustrations, buttons, app assets). Website Design mode creates
+full-page website screenshots with dense, information-rich layouts.
+Keywords: "icon", "illustration", "asset", "button" → UI/Web.
+Keywords: "landing page", "website", "homepage", "dashboard" → Website Design.
 
 ---
 
 ## Step 4: Construct Reasoning Brief
 
-Build the prompt using the **5-Component Formula** from `references/prompt-engineering.md`.
+Build the prompt using the **5-Component Formula** from `references/prompt-core.md`.
 
 **The 5 Components:** Subject → Action → Location/Context → Composition → Style (includes lighting)
 
@@ -60,12 +67,12 @@ Build the prompt using the **5-Component Formula** from `references/prompt-engin
 - Name real brands for styling: "Lululemon", "Tom Ford" (triggers visual associations)
 - Include micro-details: "sweat droplets on collarbones", "baby hairs stuck to neck"
 - Use prestigious context anchors: "Vanity Fair editorial", "National Geographic cover"
-- NEVER use banned keywords (see `references/prompt-engineering.md` → BANNED PROMPT KEYWORDS) — use `imageSize` param instead
+- NEVER use banned keywords (see `references/prompt-core.md` → BANNED PROMPT KEYWORDS) — use `imageSize` param instead
 - NEVER write "a dark-themed ad showing..." — describe the SCENE, not the concept
 - For critical constraints use ALL CAPS: "MUST contain exactly three figures"
 - For products: say "prominently displayed" to ensure visibility
 
-For templates (Photorealistic, Product, Illustrated, Text-Heavy) see `references/prompt-engineering.md` → Proven Prompt Templates.
+For domain-specific templates, see the mode file loaded in Step 3 (`references/modes/`) → Prompt Templates.
 
 ---
 
@@ -149,7 +156,7 @@ Use `magick` (v7) if available, fall back to `convert` (v6). See `references/pos
 
 | Error | Action |
 |-------|--------|
-| `IMAGE_SAFETY` | Rephrase using Safety Rephrase strategies in `references/prompt-engineering.md`. NEVER auto-retry without user approval. Max 3 rephrase attempts. |
+| `IMAGE_SAFETY` | Rephrase using Safety Rephrase strategies in `references/prompt-core.md`. NEVER auto-retry without user approval. Max 3 rephrase attempts. |
 | `PROHIBITED_CONTENT` | Topic blocked by Google. Non-retryable — explain why, suggest alternatives. |
 | Empty response (no image) | Verify `responseModalities` includes "IMAGE". Retry once. |
 | HTTP 429 | Scripts retry automatically (exponential backoff, 3 attempts). If persistent, wait 60s. |

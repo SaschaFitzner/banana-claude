@@ -1,6 +1,6 @@
 # Workflow: Edit
 
-> **Prerequisites:** If not already loaded, read `references/prompt-engineering.md` before step 3. Default model: `gemini-3.1-flash-image-preview`.
+> **Prerequisites:** If not already loaded, read `references/prompt-core.md` before step 3. Default model: `gemini-3.1-flash-image-preview`.
 
 ## Edit Pipeline
 
@@ -28,7 +28,7 @@ ALWAYS enhance the user's instruction before passing to the API:
 | "make it look like this" (+ reference) | "Apply the visual style, lighting, and color palette from the reference image while preserving the subject and composition of the primary image" |
 | "use the colors from this" (+ reference) | "Match the color grading, tonal range, and white balance from the reference image, preserving all subject detail and composition" |
 
-See `references/prompt-engineering.md` → Positive Framing for rephrasing exclusions as affirmations.
+See `references/prompt-core.md` → Positive Framing for rephrasing exclusions as affirmations.
 
 ---
 

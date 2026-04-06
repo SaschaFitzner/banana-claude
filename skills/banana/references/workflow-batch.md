@@ -2,7 +2,7 @@
 
 > Generate N variations of an idea, or run a CSV-driven batch of distinct images.
 >
-> **Prerequisites:** If not already loaded, read `references/gemini-models.md` and `references/prompt-engineering.md` before Step 2.
+> **Prerequisites:** If not already loaded, read `references/gemini-models.md` and `references/prompt-core.md` before Step 2.
 
 ## Batch Pipeline
 
