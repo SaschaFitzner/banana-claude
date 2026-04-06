@@ -59,20 +59,24 @@ def generate_image(prompt, model, aspect_ratio, resolution, api_key,
         method="POST",
     )
 
+    # finishReasons that are worth retrying (transient / non-deterministic)
+    RETRIABLE_FINISH_REASONS = {"IMAGE_OTHER"}
+
     max_retries = 3
     result = None
+    image_data = None
+    text_response = ""
+
     for attempt in range(max_retries):
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
                 result = json.loads(resp.read().decode("utf-8"))
-            break  # Success
         except urllib.error.HTTPError as e:
             error_body = e.read().decode("utf-8") if e.fp else ""
             if e.code == 429 and attempt < max_retries - 1:
                 wait = 2 ** (attempt + 1)
                 print(json.dumps({"retry": True, "attempt": attempt + 1, "wait_seconds": wait, "reason": "rate_limited"}), file=sys.stderr)
                 time.sleep(wait)
-                # Rebuild request for retry
                 req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
                 continue
             if e.code == 400 and "FAILED_PRECONDITION" in error_body:
@@ -84,29 +88,36 @@ def generate_image(prompt, model, aspect_ratio, resolution, api_key,
             print(json.dumps({"error": True, "message": str(e.reason)}))
             sys.exit(1)
 
-    if result is None:
-        print(json.dumps({"error": True, "message": "Max retries exceeded"}))
-        sys.exit(1)
+        # Check for blocked prompt (no candidates at all)
+        candidates = result.get("candidates", [])
+        if not candidates:
+            finish_reason = result.get("promptFeedback", {}).get("blockReason", "UNKNOWN")
+            print(json.dumps({"error": True, "message": f"No candidates returned. Reason: {finish_reason}"}))
+            sys.exit(1)
 
-    # Extract image from response
-    candidates = result.get("candidates", [])
-    if not candidates:
-        finish_reason = result.get("promptFeedback", {}).get("blockReason", "UNKNOWN")
-        print(json.dumps({"error": True, "message": f"No candidates returned. Reason: {finish_reason}"}))
-        sys.exit(1)
+        # Extract image from response
+        parts = candidates[0].get("content", {}).get("parts", [])
+        image_data = None
+        text_response = ""
+        for part in parts:
+            if "inlineData" in part:
+                image_data = part["inlineData"]["data"]
+            elif "text" in part:
+                text_response = part["text"]
 
-    parts = candidates[0].get("content", {}).get("parts", [])
-    image_data = None
-    text_response = ""
+        if image_data:
+            break  # Success -- got an image
 
-    for part in parts:
-        if "inlineData" in part:
-            image_data = part["inlineData"]["data"]
-        elif "text" in part:
-            text_response = part["text"]
-
-    if not image_data:
+        # No image -- check if retriable
         finish_reason = candidates[0].get("finishReason", "UNKNOWN")
+        if finish_reason in RETRIABLE_FINISH_REASONS and attempt < max_retries - 1:
+            wait = 2 ** (attempt + 1)
+            print(json.dumps({"retry": True, "attempt": attempt + 1, "wait_seconds": wait, "reason": finish_reason}), file=sys.stderr)
+            time.sleep(wait)
+            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
+            continue
+
+        # Non-retriable or last attempt
         print(json.dumps({"error": True, "message": f"No image in response. finishReason: {finish_reason}"}))
         sys.exit(1)
 

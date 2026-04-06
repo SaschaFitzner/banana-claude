@@ -75,7 +75,7 @@ With references: adds `"references": ["path1", "path2"]` to the output.
 
 On error: `{"error": true, "message": "..."}` with non-zero exit code.
 
-See SKILL.md → Gemini-Specific Errors for `IMAGE_SAFETY` and `PROHIBITED_CONTENT` handling. HTTP 429 — scripts retry automatically (exponential backoff, 3 attempts).
+See SKILL.md → Gemini-Specific Errors for `IMAGE_SAFETY`, `PROHIBITED_CONTENT`, and `IMAGE_OTHER` handling. HTTP 429 and `IMAGE_OTHER` — scripts retry automatically (exponential backoff, 3 attempts).
 
 ---
 

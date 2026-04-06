@@ -219,6 +219,7 @@ Gemini uses a two-layer safety architecture:
 | `PROHIBITED_CONTENT` | Content policy violation | No -- topic is blocked |
 | `SAFETY` | General safety block | Rephrase prompt |
 | `RECITATION` | Detected copyrighted content | Rephrase prompt |
+| `IMAGE_OTHER` | Undocumented catch-all -- model failed to produce image | Auto-retry (scripts retry up to 3x) |
 
 **Known issue:** Filters are known to be overly cautious -- benign prompts may be blocked. Iterate with rephrased wording if this happens.
 

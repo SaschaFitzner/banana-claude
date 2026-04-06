@@ -3,7 +3,7 @@ name: banana
 description: "AI image generation using Google Gemini. Use for any request involving creating, editing, or iterating on images, photos, logos, banners, and illustrations. Handles text-to-image, image editing, multi-turn sessions, batch workflows, and brand presets. Triggers on: generate an image, create a photo, edit this picture, design a logo, make a banner, and all /banana commands."
 argument-hint: "[generate|edit|chat|inspire|batch|setup|preset|cost] <idea, path, or command>"
 metadata:
-  version: "2.4.0"
+  version: "2.4.1"
   author: "Sascha Fitzner — fitznerIO GmbH"
   original-author: AgriciDaniel
 ---
@@ -54,6 +54,7 @@ When triggered without an explicit subcommand, classify intent using these signa
 |---|---|
 | `IMAGE_SAFETY` | Rephrase using Safety Rephrase strategies in `references/prompt-core.md`. NEVER auto-retry without user approval. |
 | `PROHIBITED_CONTENT` | Topic blocked by Google. Non-retryable — explain why, suggest alternatives. |
+| `IMAGE_OTHER` | Transient failure — scripts auto-retry up to 3x. If persistent, simplify the prompt. |
 | HTTP 400 `FAILED_PRECONDITION` | Billing not enabled. User must enable at https://aistudio.google.com/apikey |
 
 ## Response Format

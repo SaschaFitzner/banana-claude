@@ -159,6 +159,7 @@ Use `magick` (v7) if available, fall back to `convert` (v6). See `references/pos
 | `IMAGE_SAFETY` | Rephrase using Safety Rephrase strategies in `references/prompt-core.md`. NEVER auto-retry without user approval. Max 3 rephrase attempts. |
 | `PROHIBITED_CONTENT` | Topic blocked by Google. Non-retryable — explain why, suggest alternatives. |
 | Empty response (no image) | Verify `responseModalities` includes "IMAGE". Retry once. |
+| `IMAGE_OTHER` | Transient failure -- scripts auto-retry up to 3x with exponential backoff. Common with complex edits involving many text labels. If persistent, simplify the prompt. |
 | HTTP 429 | Scripts retry automatically (exponential backoff, 3 attempts). If persistent, wait 60s. |
 | HTTP 400 `FAILED_PRECONDITION` | Billing not enabled. User must enable at https://aistudio.google.com/apikey |
 

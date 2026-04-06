@@ -11,7 +11,7 @@ AI image generation skill for Claude Code where **Claude acts as Creative Direct
 Unlike simple API wrappers, Claude interprets your intent, selects domain expertise, constructs optimized prompts using Google's official 5-component formula, and orchestrates Gemini for the best possible results.
 
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
-[![Version](https://img.shields.io/badge/version-2.4.0-coral)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.4.1-coral)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Fork of](https://img.shields.io/badge/fork%20of-AgriciDaniel%2Fbanana--claude-green)](https://github.com/AgriciDaniel/banana-claude)
 

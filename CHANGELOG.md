@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.1] — 2026-04-06
+
+### Fixed
+- **`IMAGE_OTHER` auto-retry:** `generate.py` and `edit.py` now automatically retry up to 3x with exponential backoff when Gemini returns the undocumented `IMAGE_OTHER` finishReason (common with complex edits involving many text labels). Previously, this caused an immediate failure.
+- Added `IMAGE_OTHER` to error documentation in SKILL.md, workflow-generate.md, workflow-edit.md, and gemini-models.md
+
 ## [2.4.0] — 2026-04-06
 
 ### Added
