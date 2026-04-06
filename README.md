@@ -136,7 +136,7 @@ Claude automatically detects your intent -- no `/banana` command needed. Just sa
 - **Works Autonomously** -- No `/banana` command required. Claude detects image creation intent from natural language and routes to the right workflow automatically
 - **Smart Defaults** -- Concrete requests generate immediately via fast-path (domain mode, aspect ratio, resolution inferred from subject and keywords). Vague requests get at most 1-2 targeted questions
 - **Intent Analysis** -- Understands *what you actually need* (blog header? app icon? product shot?)
-- **Domain Expertise** -- Selects the right creative lens (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract)
+- **Domain Expertise** -- Selects the right creative lens (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract, Website Design)
 - **5-Component Prompt Formula** -- Constructs prompts with Subject + Action + Location/Context + Composition + Style (includes lighting)
 - **Prompt Adaptation** -- Translates patterns from a 2,500+ curated prompt database to Gemini's natural language format
 - **Post-Processing** -- Crops, removes backgrounds, converts formats, resizes for platforms
@@ -179,6 +179,7 @@ Instead of sending "a cat in space" to Gemini, Claude constructs:
 | **Landscape** | Backgrounds, wallpapers | "A misty mountain sunrise for my desktop" |
 | **Infographic** | Data, diagrams | "Visualize our Q1 sales growth" |
 | **Abstract** | Generative art, textures | "Voronoi tessellation in neon gradients" |
+| **Website Design** | Full-page website screenshots | "A SaaS landing page with dark theme and gradient hero" |
 
 ## Models
 
@@ -258,7 +259,8 @@ This is a complete rewrite of the [original banana-claude](https://github.com/Ag
 - **No Node.js required** -- Only Python 3.6+ (stdlib only, zero pip dependencies).
 - **Progressive disclosure architecture** -- SKILL.md refactored from 371-line monolith to ~57-line router with on-demand workflow references (~70% token reduction per invocation).
 - **Autonomous intent detection** -- Claude uses the skill via natural language without explicit `/banana` commands, with fast-path smart defaults for immediate generation.
-- **More features** -- Scripts support extended thinking (`--thinking`), resolution control (`--resolution`), and image-only mode (`--image-only`) directly.
+- **10 domain modes** -- Added Website Design mode for full-page website screenshots (landing pages, dashboards, app UIs). Original had 9 modes.
+- **More features** -- Scripts support extended thinking (`--thinking`), resolution control (`--resolution`), image-only mode (`--image-only`), and multi-image editing with up to 14 reference images (`--reference`).
 - **Lower cost** -- Stateless API calls use ~3x fewer input tokens than MCP chat sessions for iterative edits.
 
 See [CHANGELOG.md](CHANGELOG.md) for the full list of changes.
