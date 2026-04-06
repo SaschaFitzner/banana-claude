@@ -136,7 +136,7 @@ Claude automatically detects your intent -- no `/banana` command needed. Just sa
 - **Works Autonomously** -- No `/banana` command required. Claude detects image creation intent from natural language and routes to the right workflow automatically
 - **Smart Defaults** -- Concrete requests generate immediately via fast-path (domain mode, aspect ratio, resolution inferred from subject and keywords). Vague requests get at most 1-2 targeted questions
 - **Intent Analysis** -- Understands *what you actually need* (blog header? app icon? product shot?)
-- **Domain Expertise** -- Selects the right creative lens (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract)
+- **Domain Expertise** -- Selects the right creative lens (Cinema, Product, Portrait, Editorial, UI, Logo, Landscape, Infographic, Abstract, Website Design)
 - **5-Component Prompt Formula** -- Constructs prompts with Subject + Action + Location/Context + Composition + Style (includes lighting)
 - **Prompt Adaptation** -- Translates patterns from a 2,500+ curated prompt database to Gemini's natural language format
 - **Post-Processing** -- Crops, removes backgrounds, converts formats, resizes for platforms
@@ -179,6 +179,7 @@ Instead of sending "a cat in space" to Gemini, Claude constructs:
 | **Landscape** | Backgrounds, wallpapers | "A misty mountain sunrise for my desktop" |
 | **Infographic** | Data, diagrams | "Visualize our Q1 sales growth" |
 | **Abstract** | Generative art, textures | "Voronoi tessellation in neon gradients" |
+| **Website Design** | Full-page website screenshots | "A SaaS landing page with dark theme and gradient hero" |
 
 ## Models
 
