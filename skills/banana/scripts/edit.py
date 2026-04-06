@@ -44,8 +44,10 @@ def edit_image(image_path, prompt, model, api_key, output_dir=None, reference_im
     """Call Gemini API to edit an image, optionally with reference images."""
     image_path = Path(image_path).resolve()
 
-    # Build request parts: primary image first (highest weight), then references, then prompt
+    # Build request parts: instruction first, then primary image, then references
     request_parts = []
+
+    request_parts.append({"text": prompt})
 
     img_b64, img_mime = encode_image(image_path)
     request_parts.append({"inlineData": {"mimeType": img_mime, "data": img_b64}})
@@ -55,8 +57,6 @@ def edit_image(image_path, prompt, model, api_key, output_dir=None, reference_im
         ref_b64, ref_mime = encode_image(ref)
         request_parts.append({"inlineData": {"mimeType": ref_mime, "data": ref_b64}})
         ref_paths.append(str(Path(ref).resolve()))
-
-    request_parts.append({"text": prompt})
 
     url = f"{API_BASE}/{model}:generateContent?key={api_key}"
 
